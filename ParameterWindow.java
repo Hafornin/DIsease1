@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.Color;
 import java.awt.event.*;
 import java.awt.Graphics ;
+import java.awt.* ;
 
 public class ParameterWindow extends JFrame implements ActionListener{
 	JButton MainButton;
