@@ -3,43 +3,23 @@ import java.util.*;
 public class Group {
 	
 	//Attributes
-	private ArrayList<Individual> group;
-	private int susceptible;
-	private int infected;
-	private int recovered;
+	public ArrayList<Individual> group;
+	public int susceptible;
+	public int infected;
+	public int recovered;
 	public ArrayList<Individual>[] configurationHistory;
 	public int[][] numHistory;
+	public Disease disease;
 	
 	//Constructors
-	public Group(int size){
+	public Group(int size, Disease d){
+		disease = d;
 		group = new ArrayList<Individual>();
 		for(int i=0;i<size;i++){
-			group.add(new Individual());
+			group.add(new Individual(0,disease));
 		}
-		configurationHistory = new ArrayList[20];
-		numHistory = new int[20][3]; //s,i,r
-	}
-	
-	//Getters
-	public Individual getIndividual(int i){
-		if(0<=i && i<group.size()){
-			return group.get(i);
-		}else{
-			System.out.println("getIndividual : index out of bounds");
-			return null;
-		}
-	}
-	
-	public int getSusceptible(){
-		return susceptible;
-	}
-	
-	public int getInfected(){
-		return infected;
-	}
-	
-	public int getRecovered(){
-		return recovered;
+		configurationHistory = new ArrayList[60];
+		numHistory = new int[60][3]; //s,i,r
 	}
 	
 	//Methods
@@ -49,13 +29,13 @@ public class Group {
 		int i = 0;
 		int r = 0;
 		for(int c=0;c<group.size();c++){
-			if(group.get(c).getState()=='s'){
+			if(group.get(c).state=='s'){
 				s++;
 			}
-			if(group.get(c).getState()=='i'){
+			if(group.get(c).state=='i'){
 				i++;
 			}
-			if(group.get(c).getState()=='r'){
+			if(group.get(c).state=='r'){
 				r++;
 			}
 		}
@@ -69,17 +49,17 @@ public class Group {
 		storeConfiguration(j);
 		int met = 0;
 		for(int i=0;i<group.size();i++){
-			for(int c=0;c<2;c++){
+			for(int c=0;c<5;c++){
 				met = (int) (Math.random()*group.size());
 				while(met==i){
 					met = (int) (Math.random()*group.size());
 				}
-				group.get(i).meet(0.3,group.get(met));
+				group.get(i).meet(group.get(met));
 			}
 		}
 		for(int i=0;i<group.size();i++){
 			group.get(i).updateTime();
-			group.get(i).updateState(7);
+			group.get(i).updateState();
 		}
 		updateVariables();
 	}

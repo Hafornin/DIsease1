@@ -1,8 +1,8 @@
 public class Individual {
 	
 	//Attributes
-	private char state; //in susceptible (s) , infected (i), just infected (j) recovered (r)
-	private int infectedTime; //number of days from infection (0 = not infected)
+	public char state; //in susceptible (s) , infected (i), just infected (j) recovered (r)
+	public int infectedTime; //number of days from infection (0 = not infected)
 	public Disease disease;
 	
 	//Constructors
@@ -15,20 +15,6 @@ public class Individual {
 		disease = d;
 		infectedTime = t;
 		updateState();
-	}
-	
-	//Getters
-	public char getState(){
-		return state;
-	}
-	
-	//Setters
-	public void setState(char s){
-		state = s;
-	}
-	
-	public void setInfectedTime(int t){
-		infectedTime = t;
 	}
 	
 	//Methods
