@@ -7,7 +7,8 @@ public class Group {
 	private int susceptible;
 	private int infected;
 	private int recovered;
-	public ArrayList<Individual>[] history;
+	public ArrayList<Individual>[] configurationHistory;
+	public int[][] numHistory;
 	
 	//Constructors
 	public Group(int size){
@@ -15,7 +16,8 @@ public class Group {
 		for(int i=0;i<size;i++){
 			group.add(new Individual());
 		}
-		history = new ArrayList[20];
+		configurationHistory = new ArrayList[20];
+		numHistory = new int[20][3]; //s,i,r
 	}
 	
 	//Getters
@@ -83,7 +85,11 @@ public class Group {
 	}
 	
 	public void storeConfiguration(int i){
-		history[i] = group;
+		configurationHistory[i] = group;
+		numHistory[i][0] = susceptible;
+		numHistory[i][1] = infected;
+		numHistory[i][2] = recovered;
+		
 	}
 	
 	//toString
