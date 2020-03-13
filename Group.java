@@ -7,6 +7,7 @@ public class Group {
 	private int susceptible;
 	private int infected;
 	private int recovered;
+	private ArrayList<Individual>[] history;
 	
 	//Constructors
 	public Group(int size){
@@ -14,6 +15,7 @@ public class Group {
 		for(int i=0;i<size;i++){
 			group.add(new Individual());
 		}
+		history = new ArrayList[20];
 	}
 	
 	//Getters
@@ -61,14 +63,15 @@ public class Group {
 	}
 				
 	
-	public void iterate(){
+	public void iterate(int j){
+		storeConfiguration(j);
 		int met = 0;
 		for(int i=0;i<group.size();i++){
 			for(int c=0;c<2;c++){
-				/*while(met==i){
-					met = (int) Math.random()*group.size();
-				}*/
-				met = (int) Math.random()*group.size();
+				met = (int) (Math.random()*group.size());
+				while(met==i){
+					met = (int) (Math.random()*group.size());
+				}
 				group.get(i).meet(0.3,group.get(met));
 			}
 		}
@@ -79,7 +82,9 @@ public class Group {
 		updateVariables();
 	}
 	
-	
+	public void storeConfiguration(int i){
+		history[i] = group;
+	}
 	
 	//toString
 	

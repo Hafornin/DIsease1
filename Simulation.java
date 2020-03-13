@@ -6,7 +6,7 @@ public class Simulation {
 		g.getIndividual(0).setInfectedTime(1);
 		g.getIndividual(0).updateState(7);
 		for(int i=0;i<20;i++){
-			g.iterate();
+			g.iterate(i);
 			System.out.println(g.toString());
 		}
 		
