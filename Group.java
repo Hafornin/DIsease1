@@ -7,7 +7,7 @@ public class Group {
 	private int susceptible;
 	private int infected;
 	private int recovered;
-	private ArrayList<Individual>[] history;
+	public ArrayList<Individual>[] history;
 	
 	//Constructors
 	public Group(int size){
