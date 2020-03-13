@@ -64,12 +64,16 @@ public class Group {
 	public void iterate(){
 		int met = 0;
 		for(int i=0;i<group.size();i++){
+			System.out.println("Etape 1");
 			for(int c=0;c<2;c++){
-				/*while(met==i){
-					met = (int) Math.random()*group.size();
-				}*/
+				System.out.println("Etape 2");
+				while(met==i){
+					met = (int) (Math.random()*group.size());
+					System.out.println("Etape while");
+				}
 				met = (int) Math.random()*group.size();
 				group.get(i).meet(0.3,group.get(met));
+				System.out.println("Etape 3");
 			}
 		}
 		for(int i=0;i<group.size();i++){
