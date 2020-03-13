@@ -9,6 +9,7 @@ import java.awt.event.*;
 import java.awt.Graphics ;
 import java.awt.* ;
 import javax.swing.* ;
+import org.jfree.chart.JFreeChart;
  
 public class Main{
   

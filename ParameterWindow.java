@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.event.*;
 import java.awt.Graphics ;
 import java.awt.* ;
+import org.jfree.chart.JFreeChart;
 
 public class ParameterWindow extends JFrame implements ActionListener{
 	JButton MainButton;

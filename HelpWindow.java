@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.*;
 import java.awt.Graphics ;
 import java.awt.* ;
+import org.jfree.chart.JFreeChart;
 
 public class HelpWindow extends JFrame implements ActionListener{
 	
@@ -22,16 +23,21 @@ public class HelpWindow extends JFrame implements ActionListener{
 		this.setTitle("Help");
 		this.setLayout(null);
 		
+		//JPanel panFondEcran = new JPanel();
+		//panFondEcran.add(new TestImagePanel(new ImageIcon("/home/haf/Documents/Travail/INSA/73/Info/Java/DIsease1/Blue.jpeg").getImage()));
+		
 		JPanel BasePanel = new JPanel();
 		BasePanel.setLayout(layout);
 		BasePanel.setBounds(0,0,800,600);
 		this.setContentPane(BasePanel);
+	
 		
 		Font FONT1 = new Font("Cambria",Font.PLAIN, 11);
 		
 		JLabel R0 = new JLabel();
 		R0.setText("<html>R0 is called the basic reproduction number.<br>It represents the number of healthy individuals an infected one will contaminate on average over the duration of his infection.<html>");
 		R0.setFont(FONT1);
+		R0.setOpaque(false);
 		
 		JLabel Mort = new JLabel();
 		Mort.setText("<html>The mortality of the disease is the ratio of the people the pathogen will eventually kill amongst those it infects.");
@@ -58,6 +64,7 @@ public class HelpWindow extends JFrame implements ActionListener{
 	
 	
 	
+	
 		
 	
 	public void actionPerformed (ActionEvent e) { 
@@ -65,14 +72,14 @@ public class HelpWindow extends JFrame implements ActionListener{
 		
 		
 			}
-			public void paintComponent(Graphics g) {
-                super.paintComponent(g);
+		//	public void paintComponent(Graphics g) {
+         //       super.paintComponent(g);
  
-                ImageIcon m = new ImageIcon("/home/haf/Documents/Travail/INSA/73/Info/Java/DIsease1/Blue.jpeg");
-                Image monImage = m.getImage();
-                g.drawImage(monImage, 0, 0,this);
+           //     ImageIcon m = new ImageIcon("/home/haf/Documents/Travail/INSA/73/Info/Java/DIsease1/Blue.jpeg");
+             //   Image monImage = m.getImage();
+               // g.drawImage(monImage, 0, 0,this);
  
-            }
+//            }
 		}
 	
 		
