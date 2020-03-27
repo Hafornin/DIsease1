@@ -12,15 +12,16 @@ public class Group {
 	public Disease disease;
 	
 	//Constructors
-	public Group(int size, Disease d){
+	public Group(int size , int t , Disease d){
 		disease = d;
 		group = new ArrayList<Individual>();
 		for(int i=0;i<size;i++){
 			group.add(new Individual(0,disease));
 		}
-		configurationHistory = new ArrayList[60];
-		numHistory = new int[60][3]; //s,i,r
+		configurationHistory = new ArrayList[t];
+		numHistory = new int[t][3]; //s,i,r
 	}
+	
 	
 	//Methods
 	
