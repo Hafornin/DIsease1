@@ -25,6 +25,7 @@ public class ParameterWindow extends JFrame implements ActionListener{
 	
 	JScrollPane ScrollPane;
 	HelpWindow Help;
+	ResultsGraph Resultsg;
 	
 	
 	public ParameterWindow(){
@@ -38,7 +39,7 @@ public class ParameterWindow extends JFrame implements ActionListener{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		Help = new HelpWindow();
-
+		Resultsg = new ResultsGraph();
 		
 		firstTF = new JTextField();
 		JLabel firstLabel = new JLabel();
@@ -226,6 +227,12 @@ public class ParameterWindow extends JFrame implements ActionListener{
 			Help.setVisible(true);
 			
 		}
+		
+		if(e.getSource() == ResultsButton){
+			Resultsg.setVisible(true);
+			
+		}
+		
 		
 	}
 	
