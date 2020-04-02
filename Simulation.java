@@ -2,7 +2,7 @@ public class Simulation {
 	
 	public static void main (String[] args) {
 		System.out.println("Coucou");
-		Disease d = new Disease(0.05,14);
+		Disease d = new Disease(0.01,14,14);
 		Group g = new Group(500000,60,d);
 		g.group.get(0).infectedTime = 1;
 		g.group.get(0).updateState();
