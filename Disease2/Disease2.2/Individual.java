@@ -10,6 +10,7 @@ public class Individual {
 	
 	private double x; //x coordinate
 	private double y; //y coordinate
+	private double angle;
 	
 	private String state; //susceptible OR infected OR recovered 
 	private Color color;
@@ -27,13 +28,14 @@ public class Individual {
 	
 		x = X_MIN+(X_MAX-X_MIN)*Math.random();
 		y = Y_MIN+(Y_MAX-Y_MIN)*Math.random();
+		angle = 2*Math.PI*Math.random();
 		
 		disease = d;
 		state = "susceptible";
 		color = Color.green;
 		identified = false;
 		infectedTimeDays = 0;
-		socialDistanceCoeff = 0;
+		socialDistanceCoeff = 5;
 	}
 	
 	//Getters :
@@ -57,6 +59,11 @@ public class Individual {
 	//Setters :
 	public void setSocialDistanceCoeff(double sdc){
 		socialDistanceCoeff = sdc;
+	}
+	
+	public void infect(){
+		state = "infected";
+		infectedTimeDays = 1;
 	}
 	
 	
@@ -125,17 +132,34 @@ public class Individual {
 	
 	//Method checking that the individuals do not get out of the box
 	public void checkWalls(double xi, double yi){
-		if(X_MIN<xi && X_MAX>xi){
+		if(X_MIN>xi){
+			x = 2*X_MIN-xi;
+			angle = angle + Math.PI;
+		}else if(X_MAX<xi){
+			x = 2*X_MAX-xi;
+			angle = angle + Math.PI;
+		}else{
 			x = xi;
 		}
-		if(Y_MIN<yi && Y_MAX>yi){
-			y = yi;
+		if(Y_MIN>yi){
+			y = 2*Y_MIN-yi;
+			angle = angle + Math.PI;
+		}else if(Y_MAX<yi){
+			y = 2*Y_MAX-yi;
+			angle = angle + Math.PI;
+		}else{
+			y=yi;
 		}
 	}
 	
 	//Method defining the normal movement of each individual
 	public void planTrip(){
-		double angle = 2*Math.PI*Math.random();
+		double test = Math.random();
+		double sign = 1;
+		if(test<0.5){
+			sign = -1;
+		}
+		angle = angle + sign*0.2*Math.PI*Math.random();
 		double xi = x + disease.getDistanceTraveled()*Math.cos(angle);
 		double yi = y + disease.getDistanceTraveled()*Math.sin(angle);
 		checkWalls(xi,yi);
@@ -143,8 +167,8 @@ public class Individual {
 	
 	//Method implementing social distancing 
 	public void repel(Individual individual){
-		double xi = this.x - (individual.x-this.x)*this.socialDistanceCoeff/(disease.getInfectionRadius()*disease.getInfectionRadius());
-		double yi = this.y - (individual.y-this.y)*this.socialDistanceCoeff/(disease.getInfectionRadius()*disease.getInfectionRadius());
+		double xi = this.x - (individual.x-this.x)*this.socialDistanceCoeff;
+		double yi = this.y - (individual.y-this.y)*this.socialDistanceCoeff;
 		checkWalls(xi,yi);
 	}
 		
