@@ -10,17 +10,22 @@ public class Group {
 	public ArrayList<Individual>[] configurationHistory;
 	public int[][] numHistory;
 	public Disease disease;
+	public double xmax;
+	public double ymax;
 	
 	//Constructors
-	public Group(int size, Disease d){
+	public Group(int size , int t , Disease d, double x, double y){
+		xmax = x;
+		ymax = y;
 		disease = d;
 		group = new ArrayList<Individual>();
 		for(int i=0;i<size;i++){
 			group.add(new Individual(0,disease));
 		}
-		configurationHistory = new ArrayList[60];
-		numHistory = new int[60][3]; //s,i,r
+		configurationHistory = new ArrayList[t];
+		numHistory = new int[t][3]; //s,i,r
 	}
+	
 	
 	//Methods
 	

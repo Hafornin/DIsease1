@@ -4,17 +4,16 @@ public class Individual {
 	public char state; //in susceptible (s) , infected (i), just infected (j) recovered (r)
 	public int infectedTime; //number of days from infection (0 = not infected)
 	public Disease disease;
+	public double x;
+	public double y;
 	
-	//Constructors
-	public Individual(){
-		state = 's';
-		infectedTime = 0;
-	}
-	
-	public Individual(int t,Disease d){
+	//Constructors	
+	public Individual(int t,Disease d,double xmax,double ymax){
 		disease = d;
 		infectedTime = t;
 		updateState();
+		x = Math.random()*xmax;
+		y = Math.random()*ymax;
 	}
 	
 	//Methods
