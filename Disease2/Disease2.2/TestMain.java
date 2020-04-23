@@ -25,7 +25,7 @@
 public class TestMain {
 	
 	public static void main (String[] args) {
-		Disease d = new Disease(15, 10, 0.3, 0, 0, 3, 10);
+		Disease d = new Disease(30, 10, 0.05, 0, 0, 0.3, 500);
 		Group g = new Group(100, 50, 50, 200, 200, d);
 		Group[] boxes = new Group[1];
 		for(int i=0;i<10;i++){

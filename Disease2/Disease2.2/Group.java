@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Group extends JPanel{
 	
-	//Attributes : 
+//Attributes : 
 	private int numSusceptible; //number of susceptible persons in the simulation
 	private int numInfected; //number of infected persons in the simulation
 	private int numRecovered; //number of recovered persons in the simulation
@@ -20,7 +20,7 @@ public class Group extends JPanel{
 	//DATA STORAGE
 
 	
-	//Constructor :
+//Constructor :
 	public Group(int s, int x, int y, int xl, int yl, Disease d){
 		SIZE = s;
 		X = x;
@@ -39,7 +39,7 @@ public class Group extends JPanel{
 	}
 	
 	
-	//Getters :
+//Getters :
 	public int getNumInfected(){
 		return numInfected;
 	}
@@ -48,9 +48,9 @@ public class Group extends JPanel{
 		return group;
 	}
 	
-	//Setters :
+//Setters :
 	
-	//Methods :
+//Methods :
 	
 	//Method updating the number of susceptible, infected and recovered individuals
 	public void updateValues(){
@@ -70,6 +70,8 @@ public class Group extends JPanel{
 		}
     }
     
+//Moving the individuals
+    
     //Method making the individuals move inside the group
     public void move(){
 		for(int i=0;i<group.size();i++){
@@ -81,6 +83,9 @@ public class Group extends JPanel{
 					group.get(i).repel(group.get(j));
 				}
 			}			
+		}
+		for(int i=0;i<group.size();i++){
+			group.get(i).updatePosition();
 		}
 	}
 	
@@ -106,7 +111,8 @@ public class Group extends JPanel{
 		}
 	}
 	
-	//Display
+//Display :
+
 	public void paintComponent(Graphics g){
 		g.setColor(Color.black);
 		g.drawRect(X-5,Y-5,X_LENGTH+10,Y_LENGTH+10);
