@@ -8,7 +8,7 @@ public class Disease {
 	private double identifiedProportion; //proportion of infected people identified
 	private double centralPointTripProba; //probability of going to the central point
 	private double distanceTraveled; //distance traveled each day by the individual
-	private double socialDistanceRadius; //distance individuals attempt to keep between them when social distancing is active
+	private double socialDistanceRadius; //distance at which individuals repel each other when social distancing is active
 	
 	//Constructor :
 	
