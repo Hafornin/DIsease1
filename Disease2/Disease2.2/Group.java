@@ -77,13 +77,13 @@ public class Group extends JPanel{
 		for(int i=0;i<group.size();i++){
 			group.get(i).planTrip();
 		}
-		for(int i=0;i<group.size();i++){
+		/*for(int i=0;i<group.size();i++){
 			for(int j=0;j<group.size();j++){
 				if(group.get(i).isCloseEnoughtoRepel(group.get(j))){
 					group.get(i).repel(group.get(j));
 				}
 			}			
-		}
+		}*/
 		for(int i=0;i<group.size();i++){
 			group.get(i).updatePosition();
 		}
@@ -118,7 +118,7 @@ public class Group extends JPanel{
 		g.drawRect(X-5,Y-5,X_LENGTH+10,Y_LENGTH+10);
 		for(int i=0;i<group.size();i++){
 			g.setColor(group.get(i).getColor());
-			g.fillOval((int)group.get(i).getX()-5,(int)group.get(i).getY()-5,10,10);
+			g.fillOval((int)group.get(i).getPosition().getX()-5,(int)group.get(i).getPosition().getY()-5,10,10);
 		}
 	}
 		
