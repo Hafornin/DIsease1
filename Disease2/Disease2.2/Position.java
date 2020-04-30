@@ -1,4 +1,5 @@
 public class Position {
+<<<<<<< HEAD
 	
 //Attributes :
 	private double x; //x coordinate
@@ -36,5 +37,9 @@ public class Position {
 		double distance = Math.sqrt((x-pos.getX())*(x-pos.getX()) + (y-pos.getY())*(y-pos.getY()));
 		return distance;
 	}
+=======
+	private double x; //x coordinate
+	private double y; //y coordinate
+>>>>>>> DiseaseModelling
 }
 

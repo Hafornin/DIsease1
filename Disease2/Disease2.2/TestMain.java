@@ -25,8 +25,13 @@
 public class TestMain {
 	
 	public static void main (String[] args) {
+<<<<<<< HEAD
 		Disease d = new Disease(30, 10, 0.05, 0, 0, 3, 10);
 		Group g = new Group(20, 50, 50, 200, 200, d);
+=======
+		Disease d = new Disease(30, 10, 0.05, 0, 0, 0.3, 500);
+		Group g = new Group(100, 50, 50, 200, 200, d);
+>>>>>>> DiseaseModelling
 		Group[] boxes = new Group[1];
 		for(int i=0;i<6;i++){
 			g.getGroup().get(i).infect();
