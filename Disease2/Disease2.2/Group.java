@@ -87,9 +87,6 @@ public class Group extends JPanel{
 		for(int i=0;i<group.size();i++){
 			group.get(i).updatePosition();
 		}
-		for(int i=0;i<group.size();i++){
-			group.get(i).updatePosition();
-		}
 	}
 	
 	//Method moving an individual to another group

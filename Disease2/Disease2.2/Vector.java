@@ -35,7 +35,7 @@ public class Vector {
 		}			
 	}
 	
-	public Vector(Position posA, Position posB){
+	public Vector(Vector posA, Vector posB){
 		x = posB.getX()-posA.getX();
 		y = posB.getY()-posA.getY();
 		norm = Math.sqrt(x*x+y*y);
@@ -99,6 +99,11 @@ public class Vector {
 		norm = norm*k;
 		x = norm*Math.cos(angle);
 		y = norm*Math.sin(angle);
+	}
+	
+	public double distance(Vector v){
+		double distance = Math.sqrt((x-v.getX())*(x-v.getX()) + (y-v.getY())*(y-v.getY()));
+		return distance;
 	}
 		
 }

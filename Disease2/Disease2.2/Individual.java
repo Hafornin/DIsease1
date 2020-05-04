@@ -8,18 +8,12 @@ public class Individual {
 	private final double Y_MAX; //maximum y value (edge of the box)
 	private final double X_MIN; //minimum x value (edge of the box)
 	private final double Y_MIN; //minimum y value (edge of the box)
-	private final double V_NORM = 10;
+	private final double V_NORM = 100;
 	private final double DELTA_T = 0.01;
 	
-	private Position position;
+	private Vector position;
 	private Vector velocity;
 	private Vector othersForce;
-	
-	private double currentX; //current x coordinate
-	private double currentY; //current y coordinate
-	private double nextX; //next x coordinate
-	private double nextY; //next y coordinate
-	private double angle;
 
 	
 	private String state; //susceptible OR infected OR recovered 
@@ -38,15 +32,9 @@ public class Individual {
 		X_MIN = xMin;
 		Y_MIN = yMin;
 		
-		position = new Position(X_MIN+(X_MAX-X_MIN)*Math.random(),Y_MIN+(Y_MAX-Y_MIN)*Math.random());
+		position = new Vector("cartesian",X_MIN+(X_MAX-X_MIN)*Math.random(),Y_MIN+(Y_MAX-Y_MIN)*Math.random());
 		velocity = new Vector("polar", V_NORM,2*Math.PI*Math.random());
 		othersForce = new Vector();
-	
-		currentX = X_MIN+(X_MAX-X_MIN)*Math.random();
-		currentY = Y_MIN+(Y_MAX-Y_MIN)*Math.random();
-		nextX = currentX;
-		nextY = currentY;
-		angle = 2*Math.PI*Math.random();
 		
 		disease = d;
 		state = "susceptible";
@@ -54,7 +42,6 @@ public class Individual {
 		identified = false;
 		infectedTimeDays = 0;
 		socialDistanceCoeff = 0;
-		socialDistanceCoeff = 100000000;
 	}
 	
 //Getters :
@@ -67,17 +54,10 @@ public class Individual {
 	}
 	
 
-	public Position getPosition(){
+	public Vector getPosition(){
 		return position;
 	}
 
-	public double getX(){
-		return currentX;
-	}
-	
-	public double getY(){
-		return currentY;
-	}
 
 	
 //Setters :
@@ -117,11 +97,16 @@ public class Individual {
 
 	//Method updating the position of an individual
 	public void updatePosition(){
+		Vector dV = new Vector();
+		dV.add(othersForce);
+		dV.multiply(DELTA_T);
+		velocity.add(dV);
 		Vector displacement = new Vector();
 		displacement.add(velocity);
-		displacement.add(othersForce);
-		velocity.setAngle(displacement.getAngle());
-		Position newPos = new Position(position.getX()+displacement.getX(),position.getY()+displacement.getY());
+		displacement.multiply(DELTA_T);
+		Vector newPos = new Vector();
+		newPos.add(position);
+		newPos.add(displacement);
 		checkWalls(newPos);
 	}
 		
@@ -175,7 +160,7 @@ public class Individual {
 	
 	
 	//Method checking that the individuals do not get out of the box
-	public void checkWalls(Position pos){
+	public void checkWalls(Vector pos){
 		if(X_MIN>pos.getX()){
 			position.setX(X_MIN);
 			velocity.setX(Math.abs(velocity.getX()));
