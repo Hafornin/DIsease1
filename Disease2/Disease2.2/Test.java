@@ -1,5 +1,5 @@
 /*
- * TestMain.java
+ * sans titre.java
  * 
  * Copyright 2020 Aurore Wendling <Aurore@desktop-a4bfq5c.home>
  * 
@@ -22,18 +22,17 @@
  */
 
 
-public class TestMain {
+public class Test {
 	
 	public static void main (String[] args) {
-		Disease d = new Disease(30, 10, 0.05, 0, 0, 3, 50);
-		Group g = new Group(50, 50, 50, 200, 200, d);
-		Group[] boxes = new Group[1];
-		for(int i=0;i<6;i++){
-			g.getGroup().get(i).infect();
-		}
-		boxes[0] = g;
-		Simulation s = new Simulation(boxes,10);
-	
+		System.out.println(Math.cos(Math.PI/4));
+		System.out.println(Math.PI/4);
+		Vector v = new Vector("polar",4,Math.PI/4);
+		System.out.println(v.getX());
+		System.out.println(v.getY());
+		System.out.println(v.getAngle());
+		System.out.println(v.getNorm());
+		System.out.println(Math.atan(0/0));
 		
 	}
 }

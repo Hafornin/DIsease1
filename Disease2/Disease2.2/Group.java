@@ -77,13 +77,13 @@ public class Group extends JPanel{
 		for(int i=0;i<group.size();i++){
 			group.get(i).planTrip();
 		}
-		/*for(int i=0;i<group.size();i++){
+		for(int i=0;i<group.size();i++){
 			for(int j=0;j<group.size();j++){
-				if(group.get(i).isCloseEnoughtoRepel(group.get(j))){
+				if(i!=j && group.get(i).isCloseEnoughtoRepel(group.get(j))){
 					group.get(i).repel(group.get(j));
 				}
 			}			
-		}*/
+		}
 		for(int i=0;i<group.size();i++){
 			group.get(i).updatePosition();
 		}

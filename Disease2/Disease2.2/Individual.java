@@ -8,12 +8,15 @@ public class Individual {
 	private final double Y_MAX; //maximum y value (edge of the box)
 	private final double X_MIN; //minimum x value (edge of the box)
 	private final double Y_MIN; //minimum y value (edge of the box)
+	private final double V_MAX = 150;
 	private final double V_NORM = 100;
 	private final double DELTA_T = 0.01;
+	private final double WALL_REPULSION = 10;
 	
 	private Vector position;
 	private Vector velocity;
 	private Vector othersForce;
+	private Vector wallsForce;
 
 	
 	private String state; //susceptible OR infected OR recovered 
@@ -35,13 +38,15 @@ public class Individual {
 		position = new Vector("cartesian",X_MIN+(X_MAX-X_MIN)*Math.random(),Y_MIN+(Y_MAX-Y_MIN)*Math.random());
 		velocity = new Vector("polar", V_NORM,2*Math.PI*Math.random());
 		othersForce = new Vector();
+		System.out.println("othersForce: "+othersForce.getX()+"  "+othersForce.getY());
+		wallsForce = new Vector();
 		
 		disease = d;
 		state = "susceptible";
 		color = Color.green;
 		identified = false;
 		infectedTimeDays = 0;
-		socialDistanceCoeff = 0;
+		socialDistanceCoeff = 10000000;
 	}
 	
 //Getters :
@@ -98,9 +103,17 @@ public class Individual {
 	//Method updating the position of an individual
 	public void updatePosition(){
 		Vector dV = new Vector();
+		System.out.println("othersForce: "+othersForce.getX()+"  "+othersForce.getY());
+		System.out.println("1: "+dV.getX()+"  "+dV.getY());
+		dV.add(wallsForce);
 		dV.add(othersForce);
+		System.out.println("2: "+dV.getX()+"  "+dV.getY());
 		dV.multiply(DELTA_T);
+		System.out.println("3: "+dV.getX()+"  "+dV.getY());
 		velocity.add(dV);
+		if(velocity.getNorm()>V_MAX){
+			velocity.setNorm(V_MAX);
+		}
 		Vector displacement = new Vector();
 		displacement.add(velocity);
 		displacement.multiply(DELTA_T);
@@ -108,6 +121,8 @@ public class Individual {
 		newPos.add(position);
 		newPos.add(displacement);
 		checkWalls(newPos);
+		othersForce.setX(0);
+		othersForce.setY(0);
 	}
 		
 	
@@ -155,7 +170,9 @@ public class Individual {
 		if(test<0.5){
 			sign = -1;
 		}
-		velocity.setAngle(velocity.getAngle() + sign*0.1*Math.PI*Math.random());
+		System.out.println("x1 : "+velocity.getX()+" y1 : "+velocity.getY()+" n1 : "+velocity.getNorm()+" a1 : "+velocity.getAngle());
+		//velocity.setAngle(velocity.getAngle());
+		System.out.println("x2 : "+velocity.getX()+" y2 : "+velocity.getY()+" n2 : "+velocity.getNorm()+" a2 : "+velocity.getAngle());
 	}
 	
 	
@@ -164,20 +181,26 @@ public class Individual {
 		if(X_MIN>pos.getX()){
 			position.setX(X_MIN);
 			velocity.setX(Math.abs(velocity.getX()));
+			//wallsForce.setX(WALL_REPULSION);
 		}else if(X_MAX<pos.getX()){
 			position.setX(X_MAX);
 			velocity.setX(-Math.abs(velocity.getX()));
+			//wallsForce.setX(-WALL_REPULSION);
 		}else{
 			position.setX(pos.getX());
+			//wallsForce.setX(0);
 		}
 		if(Y_MIN>pos.getY()){
 			position.setY(Y_MIN);
 			velocity.setY(Math.abs(velocity.getY()));
+			//wallsForce.setY(WALL_REPULSION);
 		}else if(Y_MAX<pos.getY()){
 			position.setY(Y_MAX);
 			velocity.setY(-Math.abs(velocity.getY()));
+			//wallsForce.setY(-WALL_REPULSION);
 		}else{
 			position.setY(pos.getY());
+			//wallsForce.setY(0);
 		}		
 	}
 
@@ -198,8 +221,12 @@ public class Individual {
 	//Method implementing social distancing 
 	public void repel(Individual individual){
 		Vector repelForce = new Vector(individual.getPosition(), position);
-		repelForce.multiply(socialDistanceCoeff/position.distance(individual.getPosition()));
+		System.out.println("rep "+repelForce.getX()+"  "+repelForce.getY());
+		repelForce.multiply(socialDistanceCoeff/(position.distance(individual.getPosition())*position.distance(individual.getPosition())*position.distance(individual.getPosition())*position.distance(individual.getPosition())));
+		System.out.println("rep "+repelForce.getX()+"  "+repelForce.getY());
 		othersForce.add(repelForce);
+		System.out.println("othersForcerep: "+othersForce.getX()+"  "+othersForce.getY());
+
 
 	}
 	
