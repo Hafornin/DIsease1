@@ -11,7 +11,7 @@ public class Individual {
 	private final double V_MAX = 150;
 	private final double V_NORM = 100;
 	private final double DELTA_T = 0.01;
-	private final double WALL_REPULSION = 10;
+	private final double WALL_REPULSION = 10000;
 	
 	private Vector position;
 	private Vector velocity;
@@ -105,7 +105,9 @@ public class Individual {
 		Vector dV = new Vector();
 		System.out.println("othersForce: "+othersForce.getX()+"  "+othersForce.getY());
 		System.out.println("1: "+dV.getX()+"  "+dV.getY());
-		dV.add(wallsForce);
+		System.out.println("wallsforce: "+wallsForce.getX()+"  "+wallsForce.getY());
+		//dV.add(wallsForce);
+		System.out.println("1/2: "+dV.getX()+"  "+dV.getY());
 		dV.add(othersForce);
 		System.out.println("2: "+dV.getX()+"  "+dV.getY());
 		dV.multiply(DELTA_T);
@@ -120,9 +122,22 @@ public class Individual {
 		Vector newPos = new Vector();
 		newPos.add(position);
 		newPos.add(displacement);
-		checkWalls(newPos);
-		othersForce.setX(0);
-		othersForce.setY(0);
+		wallsRepel(newPos);
+		
+		velocity.add(wallsForce);
+		if(velocity.getNorm()>V_MAX){
+			velocity.setNorm(V_MAX);
+		}
+		displacement = new Vector();
+		displacement.add(velocity);
+		displacement.multiply(DELTA_T);
+		position.add(displacement);
+		checkWalls(position);
+		
+		othersForce.setNorm(0);
+		othersForce.setAngle(0);
+		wallsForce.setNorm(0);
+		wallsForce.setAngle(0);
 	}
 		
 	
@@ -177,31 +192,65 @@ public class Individual {
 	
 	
 	//Method checking that the individuals do not get out of the box
+	public void wallsRepel(Vector pos){
+		System.out.println("wallsforce0: "+wallsForce.getX()+"  "+wallsForce.getY());
+		if(X_MIN>=pos.getX()){
+			//position.setX(X_MIN);
+			velocity.setX(Math.abs(velocity.getX()));
+			wallsForce.setX(WALL_REPULSION);
+		}else if(X_MAX<=pos.getX()){
+			//position.setX(X_MAX);
+			velocity.setX(-Math.abs(velocity.getX()));
+			wallsForce.setX(-WALL_REPULSION);
+		}else{
+			//position.setX(pos.getX());
+			
+			Vector repelLeft = new Vector("cartesian",position.getX()-X_MIN,0);
+			repelLeft.multiply(WALL_REPULSION/Math.pow(position.getX()-X_MIN,4));
+			Vector repelRight = new Vector("cartesian",position.getX()-X_MAX,0);
+			repelRight.multiply(WALL_REPULSION/Math.pow(position.getX()-X_MAX,4));
+			wallsForce.add(repelRight);
+			wallsForce.add(repelLeft);
+			System.out.println("repelr: "+repelRight.getX()+"  "+repelRight.getY());
+			System.out.println("repell: "+repelLeft.getX()+"  "+repelLeft.getY());
+		}
+		System.out.println("wallsforcex: "+wallsForce.getX()+"  "+wallsForce.getY());
+		if(Y_MIN>=pos.getY()){
+			//position.setY(Y_MIN);
+			velocity.setY(Math.abs(velocity.getY()));
+			wallsForce.setY(WALL_REPULSION);
+		}else if(Y_MAX<=pos.getY()){
+			//position.setY(Y_MAX);
+			velocity.setY(-Math.abs(velocity.getY()));
+			wallsForce.setY(-WALL_REPULSION);
+		}else{
+			//position.setY(pos.getY());
+			
+			Vector repelDown = new Vector("cartesian",0,position.getY()-Y_MIN);
+			repelDown.multiply(WALL_REPULSION/Math.pow(position.getY()-Y_MIN,4));
+			Vector repelUp = new Vector("cartesian",0,position.getY()-Y_MAX);
+			repelUp.multiply(WALL_REPULSION/Math.pow(position.getY()-Y_MAX,4));
+			wallsForce.add(repelDown);
+			wallsForce.add(repelUp);
+		}	
+		System.out.println("wallsforcey: "+wallsForce.getX()+"  "+wallsForce.getY());
+	}
+	
+	
+	
 	public void checkWalls(Vector pos){
 		if(X_MIN>pos.getX()){
 			position.setX(X_MIN);
-			velocity.setX(Math.abs(velocity.getX()));
-			//wallsForce.setX(WALL_REPULSION);
-		}else if(X_MAX<pos.getX()){
-			position.setX(X_MAX);
-			velocity.setX(-Math.abs(velocity.getX()));
-			//wallsForce.setX(-WALL_REPULSION);
-		}else{
-			position.setX(pos.getX());
-			//wallsForce.setX(0);
 		}
-		if(Y_MIN>pos.getY()){
+		if(X_MAX<pos.getX()){
+			position.setX(X_MAX);
+		}
+		if(Y_MIN>=pos.getY()){
 			position.setY(Y_MIN);
-			velocity.setY(Math.abs(velocity.getY()));
-			//wallsForce.setY(WALL_REPULSION);
-		}else if(Y_MAX<pos.getY()){
+		}
+		if(Y_MAX<=pos.getY()){
 			position.setY(Y_MAX);
-			velocity.setY(-Math.abs(velocity.getY()));
-			//wallsForce.setY(-WALL_REPULSION);
-		}else{
-			position.setY(pos.getY());
-			//wallsForce.setY(0);
-		}		
+		}
 	}
 
 
@@ -222,12 +271,10 @@ public class Individual {
 	public void repel(Individual individual){
 		Vector repelForce = new Vector(individual.getPosition(), position);
 		System.out.println("rep "+repelForce.getX()+"  "+repelForce.getY());
-		repelForce.multiply(socialDistanceCoeff/(position.distance(individual.getPosition())*position.distance(individual.getPosition())*position.distance(individual.getPosition())*position.distance(individual.getPosition())));
+		repelForce.multiply(socialDistanceCoeff/Math.pow(position.distance(individual.getPosition()),4));
 		System.out.println("rep "+repelForce.getX()+"  "+repelForce.getY());
 		othersForce.add(repelForce);
 		System.out.println("othersForcerep: "+othersForce.getX()+"  "+othersForce.getY());
-
-
 	}
 	
 }
