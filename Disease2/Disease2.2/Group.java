@@ -36,6 +36,9 @@ public class Group extends JPanel{
 		numInfected = 0;
 		numRecovered = 0;
 		numIdentified =0;
+		
+		setVisible(true);
+		setSize(X_LENGTH+10,Y_LENGTH+10);
 	}
 	
 	

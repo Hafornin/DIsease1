@@ -206,11 +206,11 @@ public class Individual {
 		}else{
 			//position.setX(pos.getX());
 			
-			Vector repelLeft = new Vector("cartesian",pos.getX()-X_MIN,0);
+			Vector repelLeft = new Vector("polar",1,0);
 			System.out.println("repell: "+repelLeft.getX()+"  "+repelLeft.getY());
 			repelLeft.multiply(WALL_REPULSION/Math.pow(pos.getX()-X_MIN,4));
 			System.out.println("repell: "+repelLeft.getX()+"  "+repelLeft.getY());
-			Vector repelRight = new Vector("cartesian",pos.getX()-X_MAX,0);
+			Vector repelRight = new Vector("polar",1,Math.PI);
 			System.out.println("repelr: "+repelRight.getX()+"  "+repelRight.getY());
 			repelRight.multiply(WALL_REPULSION/Math.pow(pos.getX()-X_MAX,4));
 			System.out.println("repelr: "+repelRight.getX()+"  "+repelRight.getY());
@@ -232,9 +232,9 @@ public class Individual {
 		}else{
 			//position.setY(pos.getY());
 			
-			Vector repelDown = new Vector("cartesian",0,pos.getY()-Y_MIN);
+			Vector repelDown = new Vector("polar",1,Math.PI/2);
 			repelDown.multiply(WALL_REPULSION/Math.pow(pos.getY()-Y_MIN,4));
-			Vector repelUp = new Vector("cartesian",0,pos.getY()-Y_MAX);
+			Vector repelUp = new Vector("polar",1,-Math.PI/2);
 			repelUp.multiply(WALL_REPULSION/Math.pow(pos.getY()-Y_MAX,4));
 			wallsForce.add(repelDown);
 			wallsForce.add(repelUp);

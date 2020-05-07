@@ -8,27 +8,29 @@ import java.awt.event.*;
 public class Simulation extends JFrame implements ActionListener{
 	
 	//Attributes :
-	Group[] boxes;
+	SimulationGroup groups;
+	SimulationGraph graph;
 	int DELTA_T;
 	Timer timer;
 	
 	//Constructor :
-	public Simulation(Group[] b, int dt){
+	public Simulation(SimulationGroup sgro, SimulationGraph sgra, int dt){
 		DELTA_T = dt;
 		timer = new Timer(DELTA_T,this);
-		boxes = new Group[b.length];
-		for(int i=0;i<boxes.length;i++){
-			boxes[i] = b[i];
-		}
+		groups = sgro;
+		graph = sgra;
 		
 		setTitle("Simulation");
-		setSize(400, 400);
-		setLocationRelativeTo(null);               
+		setSize(1500, 900);
+		setLocationRelativeTo(null); 
+		setLayout(null);              
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		for(int i=0;i<boxes.length;i++){
-			add(boxes[i]);
-		}
+		
+		add(groups);
+		groups.setLocation(0,0);
+		
+		
 		timer.start();
 	}
 	
@@ -36,11 +38,7 @@ public class Simulation extends JFrame implements ActionListener{
 	
 	//Method performing the iterations
 	public void actionPerformed(ActionEvent e){
-		for(int i=0;i<boxes.length;i++){
-			boxes[i].move();
-			boxes[i].infect();
-			boxes[i].updateValues();
-		}
+		groups.iterate();
 		repaint();
 	}
 		
