@@ -110,18 +110,21 @@ public class Individual {
 		//System.out.println("1/2: "+dV.getX()+"  "+dV.getY());
 		dV.add(othersForce);
 		//System.out.println("2: "+dV.getX()+"  "+dV.getY());
+		wallsRepel(position);
+		dV.add(wallsForce);
 		dV.multiply(DELTA_T);
 		//System.out.println("3: "+dV.getX()+"  "+dV.getY());
 		Vector displacement = new Vector();
-		displacement.add(velocity);
+		/*displacement.add(velocity);
+		displacement.add(dV);
 		displacement.multiply(DELTA_T);
 		Vector newPos = new Vector();
 		newPos.add(position);
 		newPos.add(displacement);
-		wallsRepel(newPos);
+		wallsRepel(position);
 		
 		wallsForce.multiply(DELTA_T);
-		dV.add(wallsForce);
+		dV.add(wallsForce);*/
 		velocity.add(dV);
 		if(velocity.getNorm()>V_MAX){
 			velocity.setNorm(V_MAX);
@@ -159,7 +162,7 @@ public class Individual {
 	}
 	
 	//Method to infect an individual
-	public void infect(){
+	public void initialInfect(){
 		state = "infected";
 		infectedTimeDays = 1;
 	}

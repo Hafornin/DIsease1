@@ -29,7 +29,7 @@ public class TestMain {
 		Group g = new Group(50, 50, 50, 200, 200, d);
 		Group[] boxes = new Group[1];
 		for(int i=0;i<6;i++){
-			g.getGroup().get(i).infect();
+			g.getGroup().get(i).initialInfect();
 		}
 		boxes[0] = g;
 		Simulation s = new Simulation(boxes,10);
