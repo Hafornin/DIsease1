@@ -8,10 +8,11 @@ import java.awt.event.*;
 public class Simulation extends JFrame implements ActionListener{
 	
 	//Attributes :
-	SimulationGroup groups;
-	SimulationGraph graph;
-	int DELTA_T;
-	Timer timer;
+	private SimulationGroup groups;
+	private SimulationGraph graph;
+	private int DELTA_T;
+	private Timer timer;
+	
 	
 	//Constructor :
 	public Simulation(SimulationGroup sgro, SimulationGraph sgra, int dt){
@@ -42,6 +43,12 @@ public class Simulation extends JFrame implements ActionListener{
 	//Method performing the iterations
 	public void actionPerformed(ActionEvent e){
 		groups.iterate();
+		
+		graph.setNumSusceptible(groups.getNumSusceptible());
+		graph.setNumInfected(groups.getNumInfected());
+		graph.setNumRecovered(groups.getNumRecovered());
+		graph.setNumIdentified(groups.getNumIdentified());
+		
 		repaint();
 	}
 		
