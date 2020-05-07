@@ -43,8 +43,20 @@ public class Group extends JPanel{
 	
 	
 //Getters :
+	public int getNumSusceptible(){
+		return numSusceptible;
+	}
+	
 	public int getNumInfected(){
 		return numInfected;
+	}
+	
+	public int getNumRecovered(){
+		return numRecovered;
+	}
+	
+	public int getNumIdentified(){
+		return numIdentified;
 	}
 	
 	public LinkedList<Individual> getGroup(){
