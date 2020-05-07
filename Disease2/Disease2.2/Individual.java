@@ -177,20 +177,6 @@ public class Individual {
 	}
 	
 //Moving the individuals :	
-
-
-	//Method defining the normal movement of each individual
-	/*public void planTrip(){
-		double test = Math.random();
-		double sign = 1;
-		if(test<0.5){
-			sign = -1;
-		}
-		System.out.println("x1 : "+velocity.getX()+" y1 : "+velocity.getY()+" n1 : "+velocity.getNorm()+" a1 : "+velocity.getAngle());
-		//velocity.setAngle(velocity.getAngle());
-		System.out.println("x2 : "+velocity.getX()+" y2 : "+velocity.getY()+" n2 : "+velocity.getNorm()+" a2 : "+velocity.getAngle());
-	}*/
-	
 	
 	//Method checking that the individuals do not get out of the box
 	public void wallsRepel(Vector pos){
@@ -251,7 +237,7 @@ public class Individual {
 		}
 		if(X_MAX<pos.getX()){
 			position.setX(X_MAX);
-			velocity.setX(Math.abs(velocity.getX()));
+			velocity.setX(-Math.abs(velocity.getX()));
 		}
 		if(Y_MIN>=pos.getY()){
 			position.setY(Y_MIN);

@@ -61,6 +61,10 @@ public class SimulationGroup extends JPanel{
 		return numIdentified;
 	}
 	
+	public int getDay(){
+		return day;
+	}
+	
 	//Methods :
 	
 	//Method performing the iterations

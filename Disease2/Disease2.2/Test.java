@@ -25,14 +25,16 @@
 public class Test {
 	
 	public static void main (String[] args) {
-		System.out.println(Math.cos(Math.PI/4));
+		/*System.out.println(Math.cos(Math.PI/4));
 		System.out.println(Math.PI/4);
 		Vector v = new Vector("polar",4,Math.PI/4);
 		System.out.println(v.getX());
 		System.out.println(v.getY());
 		System.out.println(v.getAngle());
 		System.out.println(v.getNorm());
-		System.out.println(Math.atan(0/0));
+		System.out.println(Math.atan(0/0));*/
+		
+		System.out.println(Math.atan(1));
 		
 	}
 }
