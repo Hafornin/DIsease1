@@ -38,7 +38,7 @@ public class Group extends JPanel{
 		numIdentified =0;
 		
 		setVisible(true);
-		setSize(X_LENGTH+10,Y_LENGTH+10);
+		setSize(X_LENGTH,Y_LENGTH);
 	}
 	
 	

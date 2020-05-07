@@ -5,7 +5,7 @@ import javax.swing.Timer;
 import java.util.*;
 import java.awt.event.*;
 
-public class SimulationGraph extends JFrame implements ActionListener{
+public class SimulationGraph extends JPanel{
 	
 	//Attributes :
 	Group[] boxes;
@@ -13,19 +13,27 @@ public class SimulationGraph extends JFrame implements ActionListener{
 	//Constructor :
 	public SimulationGraph(Group[] b){
 		
-		
-		setSize(500,400);
-		setLocation(1000,400);
+		setVisible(true);
+		setSize(750,500);
+		setOpaque(true);
+		setBackground(Color.blue);
 		
 	}
 	
 	//Methods :
 	
-	//Method performing the iterations
-	public void actionPerformed(ActionEvent e){
+	public void paintComponent(Graphics g){
+		drawAxis(g);
 		
-		repaint();
 	}
+	
+	public void drawAxis (Graphics g){
+		g.setColor(Color.black);
+		g.drawLine(10,10,10,450); //y
+		g.drawLine(700,450,10,450); //x
+	}
+	
+
 		
 	
 }

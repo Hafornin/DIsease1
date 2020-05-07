@@ -18,7 +18,7 @@ public class SimulationGroup extends JPanel{
 		}
 		
 		setLayout(new GridLayout(3,3));
-		setSize(800,800);         
+		setSize(750,800);         
 		setVisible(true);
 		
 		for(int i=0;i<boxes.length;i++){

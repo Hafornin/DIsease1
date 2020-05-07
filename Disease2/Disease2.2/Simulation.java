@@ -28,7 +28,10 @@ public class Simulation extends JFrame implements ActionListener{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		add(groups);
-		groups.setLocation(0,0);
+		groups.setLocation(30,30);
+		
+		add(graph);
+		graph.setLocation(770,400);
 		
 		
 		timer.start();
