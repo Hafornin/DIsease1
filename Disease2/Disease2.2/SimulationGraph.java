@@ -15,7 +15,7 @@ public class SimulationGraph extends JPanel{
 	private int[][] numInfected;
 	private int[][] numRecovered;
 	private int[][] numIdentified;
-	private final int HISTORY = 100;
+	private final int HISTORY = 200;
 	private final int X_AXIS_LENGTH = 700;
 	private final int Y_AXIS_LENGTH = 440;
 	private final int X_ZERO = 10;
@@ -92,8 +92,10 @@ public class SimulationGraph extends JPanel{
 	
 	public void plot(int[][] points, Color c, Graphics g){
 		g.setColor(c);
+		int xStep = X_AXIS_LENGTH/HISTORY;
+		int yStep = Y_AXIS_LENGTH/HISTORY;
 		for(int i=0;i<points.length;i++){
-			g.fillOval(5*i+10,445-5*points[i][1],5,5);
+			g.fillOval(xStep*i+10,445-yStep*points[i][1],5,5);
 		}
 	}		
 	

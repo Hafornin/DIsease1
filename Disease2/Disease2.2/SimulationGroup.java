@@ -13,7 +13,7 @@ public class SimulationGroup extends JPanel{
 	private int[][] numInfected;
 	private int[][] numRecovered;
 	private int[][] numIdentified;
-	private final int HISTORY = 100;
+	private final int HISTORY = 200;
 	private int iteration;
 	private int day;
 	private final int ITERATIONS_PER_DAY = 10;
