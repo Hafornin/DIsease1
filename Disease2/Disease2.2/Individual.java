@@ -210,7 +210,7 @@ public class Individual {
 			System.out.println("repell: "+repelLeft.getX()+"  "+repelLeft.getY());
 			repelLeft.multiply(WALL_REPULSION/Math.pow(pos.getX()-X_MIN,4));
 			System.out.println("repell: "+repelLeft.getX()+"  "+repelLeft.getY());
-			Vector repelRight = new Vector("polar",1,Math.PI);
+			Vector repelRight = new Vector("polar",1,1.5);
 			System.out.println("repelr: "+repelRight.getX()+"  "+repelRight.getY());
 			repelRight.multiply(WALL_REPULSION/Math.pow(pos.getX()-X_MAX,4));
 			System.out.println("repelr: "+repelRight.getX()+"  "+repelRight.getY());
