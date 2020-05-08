@@ -27,6 +27,7 @@ public class Simulation extends JFrame implements ActionListener{
 		setLocationRelativeTo(null); 
 		setLayout(null);              
 		setVisible(true);
+		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		add(groups);

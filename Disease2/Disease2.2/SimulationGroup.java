@@ -70,19 +70,22 @@ public class SimulationGroup extends JPanel{
 	//Method performing the iterations
 	public void iterate(){
 		iteration ++;
-		day = iteration/ITERATIONS_PER_DAY;
-		numSusceptible[day%HISTORY][0] = day;
-		numInfected[day%HISTORY][0] = day;
-		numRecovered[day%HISTORY][0] = day;
-		numIdentified[day%HISTORY][0] = day;
-		for(int i=0;i<boxes.length;i++){
-			boxes[i].move();
-			boxes[i].infect();
-			boxes[i].updateValues();
-			numSusceptible[day%HISTORY][1] += boxes[i].getNumSusceptible();
-			numInfected[day%HISTORY][1] += boxes[i].getNumInfected();
-			numRecovered[day%HISTORY][1] += boxes[i].getNumRecovered();
-			numIdentified[day%HISTORY][1] += boxes[i].getNumIdentified();
+		int thisDay = iteration/ITERATIONS_PER_DAY;
+		if(thisDay != day){
+			day = thisDay;
+			numSusceptible[day%HISTORY][0] = day;
+			numInfected[day%HISTORY][0] = day;
+			numRecovered[day%HISTORY][0] = day;
+			numIdentified[day%HISTORY][0] = day;
+			for(int i=0;i<boxes.length;i++){
+				boxes[i].move();
+				boxes[i].infect();
+				boxes[i].updateValues();
+				numSusceptible[day%HISTORY][1] += boxes[i].getNumSusceptible();
+				numInfected[day%HISTORY][1] += boxes[i].getNumInfected();
+				numRecovered[day%HISTORY][1] += boxes[i].getNumRecovered();
+				numIdentified[day%HISTORY][1] += boxes[i].getNumIdentified();
+			}
 		}
 		repaint();
 	}

@@ -34,7 +34,8 @@ public class Test {
 		System.out.println(v.getNorm());
 		System.out.println(Math.atan(0/0));*/
 		
-		System.out.println(Math.atan(1));
+		System.out.println(130%100);
+		System.out.println(10%100);
 		
 	}
 }
