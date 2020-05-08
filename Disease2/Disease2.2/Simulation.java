@@ -2,6 +2,7 @@ import java. awt.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import javax.swing.*;
 import java.util.*;
 import java.awt.event.*;
 
@@ -44,7 +45,7 @@ public class Simulation extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e){
 		groups.iterate();
 		
-		graph.setNumSusceptible(groups.getNumSusceptible());
+		graph.setNumSusceptible(groups.getNumSusceptible());		
 		graph.setNumInfected(groups.getNumInfected());
 		graph.setNumRecovered(groups.getNumRecovered());
 		graph.setNumIdentified(groups.getNumIdentified());

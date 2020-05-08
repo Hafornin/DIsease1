@@ -2,6 +2,7 @@ import java. awt.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import javax.swing.*;
 import java.util.*;
 import java.awt.event.*;
 
@@ -28,6 +29,10 @@ public class SimulationGraph extends JPanel{
 		numInfected = new int[HISTORY][2];
 		numRecovered = new int[HISTORY][2];
 		numIdentified = new int[HISTORY][2];
+		
+		JLabel day = new JLabel("day : ");
+		day.setLocation(600,0);
+		day.setSize(100,100);
 		
 	}
 	
@@ -66,7 +71,12 @@ public class SimulationGraph extends JPanel{
 	
 	public void paintComponent(Graphics g){
 		drawAxis(g);
-		plot(numSusceptible,g);		
+		int[][] t = new int[100][2];
+		for(int i=0;i<5;i++){
+			t[i][0] = i;
+			t[i][1] = i;
+		}
+		plot(t,g);		
 	}
 	
 	public void drawAxis (Graphics g){
@@ -78,7 +88,7 @@ public class SimulationGraph extends JPanel{
 	public void plot(int[][] points, Graphics g){
 		g.setColor(Color.black);
 		for(int i=0;i<points.length;i++){
-			g.fillOval(points[i][0]+10,points[i][1]+10,5,5);
+			g.fillOval(10*points[i][0]+10,450-10*points[i][1],5,5);
 		}
 	}		
 	
