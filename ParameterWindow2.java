@@ -10,10 +10,10 @@ import java.awt.Graphics ;
 import java.awt.* ;
 import org.jfree.chart.JFreeChart;
 
-public class ParameterWindow extends JFrame implements ActionListener{
+public class ParameterWindow2 extends JFrame implements ActionListener{
 	JButton MainButton;
 	JButton ResetButton;
-	JButton ResultsButton;
+	
 	JButton HelpButton;
 	JTextField firstTF;
 	JTextField secondTF;
@@ -28,7 +28,7 @@ public class ParameterWindow extends JFrame implements ActionListener{
 	
 	
 	
-	public ParameterWindow(){
+	public ParameterWindow2(){
 		SpringLayout layout = new SpringLayout();
         
         
@@ -75,8 +75,7 @@ public class ParameterWindow extends JFrame implements ActionListener{
 		ResetButton = new JButton("Reset");
 		ResetButton.addActionListener(this);
 		
-		ResultsButton = new JButton("Display results");
-		ResultsButton.addActionListener(this);
+		
 		
 		HelpButton = new JButton("Help");
 		HelpButton.addActionListener(this);
@@ -107,7 +106,7 @@ public class ParameterWindow extends JFrame implements ActionListener{
 		firstPanel.add(fifthTF);
 		firstPanel.add(MainButton);
 		firstPanel.add(ResetButton);
-		firstPanel.add(ResultsButton);
+		
 		firstPanel.add(HelpButton);
 		
 		firstPanel.setBounds(0,0,600,600);
@@ -164,9 +163,7 @@ public class ParameterWindow extends JFrame implements ActionListener{
 		layout.putConstraint(SpringLayout.WEST, ResetButton, 250, SpringLayout.WEST, firstPanel);
 		layout.putConstraint(SpringLayout.SOUTH, ResetButton, -50, SpringLayout.SOUTH, firstPanel);
 		
-		//Position of Button 3
-		layout.putConstraint(SpringLayout.WEST, ResultsButton, 450, SpringLayout.WEST, firstPanel);
-		layout.putConstraint(SpringLayout.SOUTH, ResultsButton, -50, SpringLayout.SOUTH, firstPanel);
+		
 		
 		//Position of Help Button
 		layout.putConstraint(SpringLayout.WEST, HelpButton, 450, SpringLayout.WEST, firstPanel);
@@ -249,10 +246,7 @@ public class ParameterWindow extends JFrame implements ActionListener{
 			
 		}
 		
-		if(e.getSource() == ResultsButton){
-			
-			
-		}
+		
 		
 		
 	}
