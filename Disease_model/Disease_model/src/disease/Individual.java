@@ -48,7 +48,7 @@ public class Individual {
 		identified = false;
 		infectedTimeDays = 0;
 		socialDistanceCoeff = 10000000;
-		socialDistanceCoeff = 0;
+		//socialDistanceCoeff = 0;
 	}
 	
 //Getters :
