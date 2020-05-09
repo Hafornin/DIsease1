@@ -38,7 +38,7 @@ public class MultipleGroupsPanel extends SimulationPanel{
 	}
 	
 	//Methods :
-	
+	/*
 	public void travelBetweenGroups(int k) {
 		int i = 0;
 		while(i<boxes[k].getGroupSize()) {
@@ -66,15 +66,74 @@ public class MultipleGroupsPanel extends SimulationPanel{
 		}
 			
 	}
+	*/
 	
+	public int[] randomGroupOrder() {
+		int[] order = new int[boxes.length];
+		for(int i=0;i<order.length;i++) {
+			order[i] = 0;
+		}
+		for(int i=0;i<order.length;i++) {
+			int r = (int) ((order.length-1)*Math.random());
+			while(isInArray(order,r)==true) {
+				r = (int) ((order.length-1)*Math.random());
+			}
+			order[i] = r;
+		}
+		return order;
+	}
+	
+	public boolean isInArray(int[] array, int n) {
+		boolean t = false;
+		for(int i=0;i<array.length;i++) {
+			if(array[i]==n) {
+				t = true;
+			}
+		}
+		return t;		
+	}
+	
+	public void transfer(int i, Group initialGroup, Group newGroup) {
+		double test = Math.random();
+		if(test<initialGroup.getLeaveGroupProba()*newGroup.getEnterGroupProba()) {
+			newGroup.getGroup().add(initialGroup.getGroup().get(i));
+			initialGroup.getGroup().remove(i);
+		}
+	}
+	
+	public void travelBetweenGroups() {
+		int[] order = randomGroupOrder();
+		LinkedList<Individual>[] temporaryGroups = new LinkedList[boxes.length];
+		LinkedList<Integer>[] indices = new LinkedList[boxes.length];
+		for(int i=0;i<boxes.length;i++) {
+			for(int j=0;j<boxes.length;j++) {
+				int a = order[j];
+				for(int k=0;k<boxes[i].getGroupSize();k++) {
+					double test = Math.random();
+					if(test<boxes[i].getLeaveGroupProba()*boxes[a].getEnterGroupProba() && indices[i].contains(k)==false) {
+						temporaryGroups[a].add(boxes[i].getGroup().get(i));
+						indices[i].add(k);
+					}
+				}
+			}
+		}
+		for(int i=0;i<boxes.length;i++) {
+			for(int j=0;j<indices[i].size();j++) {
+				boxes[i].getGroup().remove(indices[i].get(j));
+			}
+			for(int j=0;j<temporaryGroups[i].size();j++) {
+				boxes[i].getGroup().add(temporaryGroups[i].get(j));
+			}
+		}
+	}
 	
 	public void updateDataValues() {
 		numSusceptible = 0;
 		numInfected = 0;
 		numRecovered = 0;
 		numIdentified =0;
+		travelBetweenGroups();
 		for(int i=0;i<boxes.length;i++){
-			//travelBetweenGroups(i);
 			boxes[i].move();
 			boxes[i].infect();
 			boxes[i].updateValues();
