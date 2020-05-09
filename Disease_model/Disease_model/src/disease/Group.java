@@ -11,6 +11,9 @@ public class Group extends JPanel{
 	private int numRecovered; //number of recovered persons in the simulation
 	private int numIdentified; //number of identified infected persons in the simulation
 	
+	private double leaveGroupProba = 0.2;
+	private double enterGroupProba = 0.2;
+	
 	private LinkedList<Individual> group; //group of people we run the simulation on
 	private Disease disease;
 	private final int SIZE;
@@ -64,6 +67,18 @@ public class Group extends JPanel{
 		return group;
 	}
 	
+	public int getGroupSize() {
+		return SIZE;
+	}
+	
+	public double getLeaveGroupProba() {
+		return leaveGroupProba;
+	}
+	
+	public double getEnterGroupProba() {
+		return enterGroupProba;
+	}
+	
 //Setters :
 	
 //Methods :
@@ -104,8 +119,11 @@ public class Group extends JPanel{
 	
 	//Method moving an individual to another group
 	public void transfer(Individual i, Group g){
-		g.group.add(i);
-		this.group.remove(i);
+		double test = Math.random();
+		if(test<this.leaveGroupProba*g.leaveGroupProba) {
+			g.group.add(i);
+			this.group.remove(i);
+		}
 	}
 	
 	//Method performing the disease transmission step

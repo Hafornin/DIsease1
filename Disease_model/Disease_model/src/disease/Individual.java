@@ -48,7 +48,7 @@ public class Individual {
 		identified = false;
 		infectedTimeDays = 0;
 		socialDistanceCoeff = 10000000;
-		//socialDistanceCoeff = 0;
+		socialDistanceCoeff = 0;
 	}
 	
 //Getters :
@@ -87,7 +87,7 @@ public class Individual {
 	public void updateState(){
 		if(infectedTimeDays>disease.getInfectionTimeDays()){
 			state = "recovered";
-			color = Color.gray;
+			color = Color.blue;
 		}else if(infectedTimeDays>0){
 			state = "infected";
 			color = Color.red;
@@ -107,7 +107,7 @@ public class Individual {
 		Vector dV = new Vector();
 		dV.add(othersForce);
 		wallsRepel(position);
-		dV.add(wallsForce);
+		//dV.add(wallsForce);
 		dV.multiply(DELTA_T);
 		Vector displacement = new Vector();
 		velocity.add(dV);

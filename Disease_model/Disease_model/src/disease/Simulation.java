@@ -14,16 +14,16 @@ import java.awt.event.*;
 public class Simulation extends JFrame implements ActionListener{
 	
 	//Attributes :
-	private SimulationGroup groups;
+	private SimulationPanel groups;
 	private int DELTA_T;
 	private Timer timer;
 	
 	
 	//Constructor :
-	public Simulation(SimulationGroup sgro, int dt){
+	public Simulation(SimulationPanel s, int dt){
 		DELTA_T = dt;
 		timer = new Timer(DELTA_T,this);
-		groups = sgro;
+		groups = s;
 		
 		setTitle("Simulation");
 		setSize(1500, 900);
