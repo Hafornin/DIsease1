@@ -17,7 +17,6 @@ public class TestMain {
 			boxes[i] = new Group(10, 10, 10, 200, 200, d);
 		}
 		SimulationGroup sgro = new SimulationGroup(boxes);    
-		SimulationGraph sgra = new SimulationGraph(boxes); 
-		Simulation s = new Simulation(sgro,sgra,10);
+		Simulation s = new Simulation(sgro,10);
 	}
 }

@@ -8,18 +8,11 @@ public class SimulationGroup extends JPanel{
 	
 	//Attributes :
 	private Group[] boxes;
-	private DefaultCategoryDataset  dataset;
-	/*private DefaultCategoryDataset  numSusceptible;
-	private DefaultCategoryDataset  numInfected;
-	private DefaultCategoryDataset  numRecovered;
-	private DefaultCategoryDataset  numIdentified;*/
-	
+	private DefaultCategoryDataset  dataset;	
 	private int numSusceptible; //number of susceptible persons in the simulation
 	private int numInfected; //number of infected persons in the simulation
 	private int numRecovered; //number of recovered persons in the simulation
 	private int numIdentified; //number of identified infected persons in the simulation
-	
-	private final int HISTORY = 200;
 	private int iteration;
 	private int day;
 	private final int ITERATIONS_PER_DAY = 10;
@@ -33,8 +26,9 @@ public class SimulationGroup extends JPanel{
 		}
 		
 		setLayout(new GridLayout(3,3));
-		setSize(750,800);         
+		setSize(720,870);         
 		setVisible(true);
+		setBackground(Color.white);
 		
 		for(int i=0;i<boxes.length;i++){
 			add(boxes[i]);
@@ -45,10 +39,6 @@ public class SimulationGroup extends JPanel{
 		numRecovered = 0;
 		numIdentified =0;
 		
-		/*numSusceptible = new DefaultCategoryDataset();
-		numInfected = new DefaultCategoryDataset();
-		numRecovered = new DefaultCategoryDataset();
-		numIdentified = new DefaultCategoryDataset();*/
 		dataset = new DefaultCategoryDataset();
 		
 		iteration = 0;
@@ -60,27 +50,7 @@ public class SimulationGroup extends JPanel{
 	public DefaultCategoryDataset getData(){
 		return dataset;
 	}
-	/*
-	public DefaultCategoryDataset getNumSusceptible(){
-		return numSusceptible;
-	}
 	
-	public DefaultCategoryDataset getNumInfected(){
-		return numInfected;
-	}
-	
-	public DefaultCategoryDataset getNumRecovered(){
-		return numRecovered;
-	}
-	
-	public DefaultCategoryDataset getNumIdentified(){
-		return numIdentified;
-	}
-	
-	public int getDay(){
-		return day;
-	}
-	*/
 	//Methods :
 	
 	//Method performing the iterations
