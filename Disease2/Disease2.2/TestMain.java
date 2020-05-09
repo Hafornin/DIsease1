@@ -2,8 +2,8 @@
 public class TestMain {
 	
 	public static void main (String[] args) {
-		Disease d = new Disease(30, 10, 0.05, 0, 0, 3, 50);
-		Group g0 = new Group(10, 10, 10, 200, 200, d);
+		Disease d = new Disease(60, 10, 0.05, 0, 0, 3, 50);
+		Group g0 = new Group(50, 10, 10, 200, 200, d);
 		Group g1 = new Group(10, 10, 10, 200, 200, d);
 		Group[] boxes = new Group[9];
 		for(int i=0;i<6;i++){

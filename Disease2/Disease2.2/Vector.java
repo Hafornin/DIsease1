@@ -20,11 +20,7 @@ public class Vector {
 			x = xiOrNorm;
 			y = yiOrAngle;
 			norm = Math.sqrt(x*x+y*y);
-			if(x==0){
-			angle = Math.PI/2;
-		}else{
-			angle = Math.atan(y/x);
-		}
+			calcAngle();
 		}else if(s=="polar"){
 			norm = xiOrNorm;
 			angle = yiOrAngle;
@@ -43,11 +39,7 @@ public class Vector {
 		x = posB.getX()-posA.getX();
 		y = posB.getY()-posA.getY();
 		norm = Math.sqrt(x*x+y*y);
-		if(x==0){
-			angle = Math.PI/2;
-		}else{
-			angle = Math.atan(y/x);
-		}
+		calcAngle();
 	}
 	
 //Getters :
@@ -72,21 +64,13 @@ public class Vector {
 	public void setX(double xi){
 		x = xi;
 		norm = Math.sqrt(x*x+y*y);
-		if(x==0){
-			angle = Math.PI/2;
-		}else{
-			angle = Math.atan(y/x);
-		}
+		calcAngle();
 	}
 	
 	public void setY(double yi){
 		y = yi;
 		norm = Math.sqrt(x*x+y*y);
-		if(x==0){
-			angle = Math.PI/2;
-		}else{
-			angle = Math.atan(y/x);
-		}
+		calcAngle();
 	}
 	
 	public void setNorm(double ni){
@@ -103,27 +87,49 @@ public class Vector {
 		
 	
 //Methods :
+
+	public void calcAngle(){
+		if(x==0 && y==0){
+			angle = 0;
+		}
+		if(x>0 && y==0){
+			angle = 0;
+		}
+		if(x>0 && y>0){
+			angle = Math.atan(y/x);
+		}
+		if(x==0 && y>0){
+			angle = Math.PI/2;
+		}
+		if(x<0 && y>0){
+			angle = Math.PI + Math.atan(y/x);
+		}
+		if(x<0 && y==0){
+			angle = Math.PI;
+		}
+		if(x<0 && y<0){
+			angle = Math.PI + Math.atan(y/x);
+		}
+		if(x==0 && y<0){
+			angle = 3*Math.PI/2;
+		}
+		if(x>0 && y<0){
+			angle = Math.atan(y/x);
+		}			
+	}
 	
 	public void add(Vector v){
 		x = x + v.getX();
 		y = y + v.getY();
 		norm = Math.sqrt(x*x+y*y);
-		if(x==0){
-			angle = Math.PI/2;
-		}else{
-			angle = Math.atan(y/x);
-		}
+		calcAngle();
 	}
 	
 	public void multiply(double k){
 		norm = norm*k;
 		x = x*k;
 		y = y*k;
-		if(x==0){
-			angle = Math.PI/2;
-		}else{
-			angle = Math.atan(y/x);
-		}
+		calcAngle();
 	}
 	
 	public double distance(Vector v){

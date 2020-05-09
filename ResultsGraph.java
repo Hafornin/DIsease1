@@ -27,12 +27,12 @@ import java.awt.Font;
 
 public class ResultsGraph extends JFrame {
 	
-	public LineChartEx() {
+	/*public LineChartEx() {
 
         initUI();
-    }
+    }*/
 	
-	public ResultsWindow(){
+	public ResultsGraph(){
 		super();
 		
 		SpringLayout layout = new SpringLayout();
@@ -97,6 +97,4 @@ public class ResultsGraph extends JFrame {
  
 //            }
 		}
-	
-		
 	

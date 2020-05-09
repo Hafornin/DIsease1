@@ -2,6 +2,7 @@ import java. awt.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import javax.swing.*;
 import java.util.*;
 import java.awt.event.*;
 
@@ -14,7 +15,12 @@ public class SimulationGraph extends JPanel{
 	private int[][] numInfected;
 	private int[][] numRecovered;
 	private int[][] numIdentified;
-	private final int HISTORY = 100;
+	private final int HISTORY = 200;
+	private final int X_AXIS_LENGTH = 700;
+	private final int Y_AXIS_LENGTH = 440;
+	private final int X_ZERO = 10;
+	private final int Y_ZERO = 450;
+
 	
 	//Constructor :
 	public SimulationGraph(Group[] b){
@@ -28,6 +34,10 @@ public class SimulationGraph extends JPanel{
 		numInfected = new int[HISTORY][2];
 		numRecovered = new int[HISTORY][2];
 		numIdentified = new int[HISTORY][2];
+		
+		JLabel day = new JLabel("day : ");
+		day.setLocation(600,0);
+		day.setSize(100,100);
 		
 	}
 	
@@ -66,19 +76,26 @@ public class SimulationGraph extends JPanel{
 	
 	public void paintComponent(Graphics g){
 		drawAxis(g);
-		plot(numSusceptible,g);		
+		int[][] t = new int[100][2];
+		for(int i=0;i<5;i++){
+			t[i][0] = i;
+			t[i][1] = i;
+		}
+		plot(numSusceptible,Color.blue,g);		
 	}
 	
 	public void drawAxis (Graphics g){
 		g.setColor(Color.black);
-		g.drawLine(10,10,10,450); //y
-		g.drawLine(700,450,10,450); //x
+		g.drawLine(X_ZERO,Y_ZERO-Y_AXIS_LENGTH,X_ZERO,Y_ZERO); //y
+		g.drawLine(X_AXIS_LENGTH+X_ZERO,Y_ZERO,X_ZERO,Y_ZERO); //x
 	}
 	
-	public void plot(int[][] points, Graphics g){
-		g.setColor(Color.black);
+	public void plot(int[][] points, Color c, Graphics g){
+		g.setColor(c);
+		int xStep = X_AXIS_LENGTH/HISTORY;
+		int yStep = Y_AXIS_LENGTH/HISTORY;
 		for(int i=0;i<points.length;i++){
-			g.fillOval(points[i][0]+10,points[i][1]+10,5,5);
+			g.fillOval(xStep*i+10,445-yStep*points[i][1],5,5);
 		}
 	}		
 	
