@@ -1,5 +1,7 @@
 package disease;
 import java. awt.*;
+import java.util.LinkedList;
+
 import org.jfree.data.category.DefaultCategoryDataset;
 
 public class MultipleGroupsPanel extends SimulationPanel{
@@ -38,32 +40,33 @@ public class MultipleGroupsPanel extends SimulationPanel{
 	//Methods :
 	
 	public void travelBetweenGroups(int k) {
-		int[] randomBoxChoice = new int[boxes.length];
-		for(int i=0;i<randomBoxChoice.length;i++) {
-			randomBoxChoice[i] = -1;
-		}
 		int i = 0;
-		while(i<boxes[k].getGroup().size()) {
-			while(randomBoxChoice.includes(-1))
-			int choice = (int) boxes.length*Math.random();
-			
-		}
-		
-		
-		while(i<boxes[k].getGroup().size()) {
-			int j=0;
-			int ip = i;
-			while(j<boxes.length && ip==i) {
-				double test = Math.random();
-				if(test<boxes[k].getLeaveGroupProba()*boxes[j].getEnterGroupProba()) {
-					boxes[j].getGroup().add(boxes[k].getGroup().get(i));
-					boxes[k].getGroup().remove(i);
-					i--;
+		while(i<boxes[k].getGroupSize()) {
+			boolean[] array = new boolean[boxes.length];
+			array[k] = true;
+			int s = (boxes.length+1)*boxes.length/2;
+			int s2 = k;
+			while(s2 < s) {
+				double c = (boxes.length-1)*Math.random();
+				int choice = (int) c;
+				if(array[choice]==false) {
+					s += choice;
+					array[choice] = true;
+					double test = Math.random();
+					if(test<boxes[k].getLeaveGroupProba()*boxes[choice].getEnterGroupProba()) {
+						boxes[choice].getGroup().add(boxes[k].getGroup().get(i));
+						boxes[k].getGroup().remove(i);
+						i--;    
+						s2 = s;
+					}
+				
 				}
 			}
 			i++;
-		}			
+		}
+			
 	}
+	
 	
 	public void updateDataValues() {
 		numSusceptible = 0;
@@ -71,7 +74,7 @@ public class MultipleGroupsPanel extends SimulationPanel{
 		numRecovered = 0;
 		numIdentified =0;
 		for(int i=0;i<boxes.length;i++){
-			travelBetweenGroups(i);
+			//travelBetweenGroups(i);
 			boxes[i].move();
 			boxes[i].infect();
 			boxes[i].updateValues();
