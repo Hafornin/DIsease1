@@ -1,4 +1,4 @@
-package disease;
+/*package disease;
 
 
 import org.jfree.chart.ChartFactory; 
@@ -12,14 +12,13 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.ApplicationFrame; 
 
 public class Graph extends ChartPanel {
+	final XYDataset dataset = createDataset( );         
+    final JFreeChart chart = createChart( dataset );  
 
-   public Graph(JFreeChart chart) {    
-      final XYDataset dataset = createDataset( );         
-      final JFreeChart chart = createChart( dataset );  
-      setChart( chart );         
-      chartPanel.setPreferredSize( new java.awt.Dimension( 560 , 370 ) );         
-      chartPanel.setMouseZoomable( true , false );         
-      setContentPane( chartPanel );
+   public Graph() {    
+      super( chart );         
+      setPreferredSize( new java.awt.Dimension( 560 , 370 ) );         
+      setMouseZoomable( true , false );         
    }
 
    private XYDataset createDataset( ) {
@@ -52,4 +51,4 @@ public class Graph extends ChartPanel {
          false);
    }
 
-}   
+}   */

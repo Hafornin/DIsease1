@@ -1,16 +1,5 @@
 package disease;
 
-import org.jfree.chart.JFreeChart;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.chart.ChartFactory; 
-import org.jfree.chart.ChartPanel; 
-import org.jfree.chart.JFreeChart; 
-import org.jfree.data.general.SeriesException; 
-import org.jfree.data.time.Second; 
-import org.jfree.data.time.TimeSeries; 
-import org.jfree.data.time.TimeSeriesCollection; 
-import org.jfree.data.xy.XYDataset; 
-import org.jfree.ui.ApplicationFrame; 
 
 public class TestMain {
 	
@@ -28,10 +17,7 @@ public class TestMain {
 			boxes[i] = new Group(10, 10, 10, 200, 200, d);
 		}
 		SimulationGroup sgro = new SimulationGroup(boxes);    
-		
-		final XYDataset dataset = createDataset( );         
-	    final JFreeChart chart = createChart( dataset );
-		Graph sgra = new Graph(chart);
+		SimulationGraph sgra = new SimulationGraph(boxes); 
 		Simulation s = new Simulation(sgro,sgra,10);
 	}
 }

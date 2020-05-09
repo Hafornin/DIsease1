@@ -2,14 +2,23 @@ package disease;
 import java. awt.*;
 import javax.swing.JPanel;
 
+import org.jfree.data.category.DefaultCategoryDataset;
+
 public class SimulationGroup extends JPanel{
 	
 	//Attributes :
 	private Group[] boxes;
-	private int[][] numSusceptible;
-	private int[][] numInfected;
-	private int[][] numRecovered;
-	private int[][] numIdentified;
+	private DefaultCategoryDataset  dataset;
+	/*private DefaultCategoryDataset  numSusceptible;
+	private DefaultCategoryDataset  numInfected;
+	private DefaultCategoryDataset  numRecovered;
+	private DefaultCategoryDataset  numIdentified;*/
+	
+	private int numSusceptible; //number of susceptible persons in the simulation
+	private int numInfected; //number of infected persons in the simulation
+	private int numRecovered; //number of recovered persons in the simulation
+	private int numIdentified; //number of identified infected persons in the simulation
+	
 	private final int HISTORY = 200;
 	private int iteration;
 	private int day;
@@ -31,10 +40,16 @@ public class SimulationGroup extends JPanel{
 			add(boxes[i]);
 		}
 		
-		numSusceptible = new int[HISTORY][2];
-		numInfected = new int[HISTORY][2];
-		numRecovered = new int[HISTORY][2];
-		numIdentified = new int[HISTORY][2];
+		numSusceptible = 0;
+		numInfected = 0;
+		numRecovered = 0;
+		numIdentified =0;
+		
+		/*numSusceptible = new DefaultCategoryDataset();
+		numInfected = new DefaultCategoryDataset();
+		numRecovered = new DefaultCategoryDataset();
+		numIdentified = new DefaultCategoryDataset();*/
+		dataset = new DefaultCategoryDataset();
 		
 		iteration = 0;
 		day = 0;
@@ -42,47 +57,55 @@ public class SimulationGroup extends JPanel{
 	
 	//Getters :
 	
-	public int[][] getNumSusceptible(){
+	public DefaultCategoryDataset getData(){
+		return dataset;
+	}
+	/*
+	public DefaultCategoryDataset getNumSusceptible(){
 		return numSusceptible;
 	}
 	
-	public int[][] getNumInfected(){
+	public DefaultCategoryDataset getNumInfected(){
 		return numInfected;
 	}
 	
-	public int[][] getNumRecovered(){
+	public DefaultCategoryDataset getNumRecovered(){
 		return numRecovered;
 	}
 	
-	public int[][] getNumIdentified(){
+	public DefaultCategoryDataset getNumIdentified(){
 		return numIdentified;
 	}
 	
 	public int getDay(){
 		return day;
 	}
-	
+	*/
 	//Methods :
 	
 	//Method performing the iterations
 	public void iterate(){
+		numSusceptible = 0;
+		numInfected = 0;
+		numRecovered = 0;
+		numIdentified =0;
+		for(int i=0;i<boxes.length;i++){
+				boxes[i].move();
+				boxes[i].infect();
+				boxes[i].updateValues();
+				numSusceptible += boxes[i].getNumSusceptible();
+				numInfected += boxes[i].getNumInfected();
+				numRecovered += boxes[i].getNumRecovered();
+				numIdentified += boxes[i].getNumIdentified();
+		}
 		iteration ++;
 		int thisDay = iteration/ITERATIONS_PER_DAY;
 		if(thisDay != day){
 			day = thisDay;
-			numSusceptible[day%HISTORY][0] = day;
-			numInfected[day%HISTORY][0] = day;
-			numRecovered[day%HISTORY][0] = day;
-			numIdentified[day%HISTORY][0] = day;
-			for(int i=0;i<boxes.length;i++){
-				boxes[i].move();
-				boxes[i].infect();
-				boxes[i].updateValues();
-				numSusceptible[day%HISTORY][1] += boxes[i].getNumSusceptible();
-				numInfected[day%HISTORY][1] += boxes[i].getNumInfected();
-				numRecovered[day%HISTORY][1] += boxes[i].getNumRecovered();
-				numIdentified[day%HISTORY][1] += boxes[i].getNumIdentified();
-			}
+			dataset.addValue(numInfected, "Infected", Integer.toString(day));
+			dataset.addValue(numRecovered, "Recovered", Integer.toString(day));
+			dataset.addValue(numSusceptible, "Susceptible", Integer.toString(day));
+			dataset.addValue(numIdentified, "Identified", Integer.toString(day));
 		}
 		repaint();
 	}
