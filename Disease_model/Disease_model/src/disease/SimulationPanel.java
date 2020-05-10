@@ -40,7 +40,7 @@ public class SimulationPanel extends JPanel{
 		day = 0;
 		
 		quarantining = false;
-		travel = true;
+		travel = false;
 		
 	}
 	
@@ -48,6 +48,14 @@ public class SimulationPanel extends JPanel{
 	
 	public DefaultCategoryDataset getData(){
 		return dataset;
+	}
+	
+	public boolean getQuarantining() {
+		return quarantining;
+	}
+	
+	public boolean getTravel() {
+		return travel;
 	}
 	
 	//Methods :	
@@ -67,6 +75,10 @@ public class SimulationPanel extends JPanel{
 	
 	//quarantine
 	public void startQuarantine() {
+		
+	}
+	
+	public void stopQuarantine() {
 		
 	}
 	

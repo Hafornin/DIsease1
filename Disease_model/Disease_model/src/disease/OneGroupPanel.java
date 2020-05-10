@@ -100,7 +100,7 @@ public class OneGroupPanel extends SimulationPanel{
 		quarantine.setVisible(true);
 	}
 	
-	public void endQuarantine() {
+	public void stopQuarantine() {
 		quarantining = false;
 		quarantine.setVisible(false);
 		

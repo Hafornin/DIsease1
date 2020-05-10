@@ -50,7 +50,7 @@ public class MultipleGroupsPanel extends SimulationPanel{
 		for(int i=0;i<quarantine.length;i++){
 			quarantine[i] = new Group(0, 10, 10, 200, 200, disease);
 			add(quarantine[i]);
-			quarantine[i].setLocation(500,520);
+			quarantine[i].setLocation(500,540);
 			quarantine[i].setVisible(false);
 		}
 		
@@ -164,6 +164,13 @@ public class MultipleGroupsPanel extends SimulationPanel{
 		quarantining = true;
 		for(int i=0;i<quarantine.length;i++){
 			quarantine[i].setVisible(true);
+		}
+	}
+	
+	public void stopQuarantine() {
+		quarantining = false;
+		for(int i=0;i<quarantine.length;i++){
+			quarantine[i].setVisible(false);
 		}
 	}
 	

@@ -193,7 +193,27 @@ public class Group extends JPanel{
 	
 //METHODS :
 	
-	//Method updating the number of susceptible, infected and recovered individuals
+//=================== Adding and removing individuals from this group ========================
+
+	/**
+	 * Method removing the individual at the position i in the list of individuals of this group
+	 * @param i the position of the individual removed from the list of this group
+	 */
+	public void remove(int i) {
+		group.remove(i);
+	}
+	
+	/**
+	 * Method adding an individual to list of individuals of this group
+	 * @param i the individual removed from the list of this group
+	 */
+	public void add(Individual i) {
+		group.add(i);
+	}
+	
+	/**
+	 * Method updating the number of susceptible, infected and recovered individuals
+	 */
 	public void updateValues(){
 		numSusceptible = 0;
 		numInfected = 0;
@@ -215,10 +235,13 @@ public class Group extends JPanel{
 		}
     }
     
-//Moving the individuals
+//=================== Moving the individuals ========================
     
-    //Method making the individuals move inside the group
+    /**
+     * Method making the individuals move inside the group
+     */
     public void move(){
+    	//making the individuals in the group repel each other when social distancing is on
 		for(int i=0;i<group.size();i++){
 			for(int j=0;j<group.size();j++){
 				if(i!=j && group.get(i).isCloseEnoughtoRepel(group.get(j))){
@@ -229,17 +252,6 @@ public class Group extends JPanel{
 		for(int i=0;i<group.size();i++){
 			group.get(i).updatePosition();
 		}
-	}
-	
-	//Method moving an individual to another group
-	public void remove(int i) {
-		group.remove(i);
-	}
-	
-	public void add(Individual i) {
-		//System.out.println("not yet "+group.size());
-		group.add(i);
-		//System.out.println("done "+group.size());
 	}
 	
 	//Method performing the disease transmission step
