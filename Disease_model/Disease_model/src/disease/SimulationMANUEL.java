@@ -11,7 +11,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import java.awt.Color;
 import java.awt.event.*;
 
-public class Simulation extends JFrame implements ActionListener{
+public class SimulationMANUEL extends JFrame implements ActionListener{
 	
 	//Attributes :
 	private SimulationPanel groups;
@@ -27,7 +27,7 @@ public class Simulation extends JFrame implements ActionListener{
 	
 	
 	//Constructor :
-	public Simulation(SimulationPanel s, int dt){
+	public SimulationMANUEL(SimulationPanel s, int dt){
 		DELTA_T = dt;
 		timer = new Timer(DELTA_T,this);
 		groups = s;
@@ -44,7 +44,7 @@ public class Simulation extends JFrame implements ActionListener{
 		JPanel parametersPanel = new JPanel();
 		parametersPanle.setBackground(Color.white);
 		add(parametersPanel);
-		parametersPanel.setLocation(750,0)
+		parametersPanel.setLocation(750,0);
 		parametersPanel.setSize(750,400);
 		
 		JButton Stop= new JButton("Stop simulation");
@@ -76,6 +76,7 @@ public class Simulation extends JFrame implements ActionListener{
 		Mortality.PaintLabels(true);
 		Mortality.setMinorTickSpacing(1);
 		Mortality.setMajorTickSpacing(10);
+		Mortality.setPosition(200,5);
 		
 		InfectionCoeff.setMaximum(100);
 		InfectionCoeff.setMinimum(0);
@@ -84,6 +85,7 @@ public class Simulation extends JFrame implements ActionListener{
 		InfectionCoeff.PaintLabels(true);
 		InfectionCoeff.setMinorTickSpacing(1);
 		InfectionCoeff.setMajorTickSpacing(10);
+		InfectionCoeff.setPosition(200,55);
 		
 		IdentifiedProportion.setMaximum(100);
 		IdentifiedProportion.setMinimum(0);
@@ -92,6 +94,7 @@ public class Simulation extends JFrame implements ActionListener{
 		IdentifiedProportion.PaintLabels(true);
 		IdentifiedProportion.setMinorTickSpacing(1);
 		IdentifiedProportion.setMajorTickSpacing(10);
+		IdentifiedProportion.setPosition(200,105);
 		
 		SocialDistance.setMaximum(100);
 		SocialDistance.setMinimum(0);
@@ -100,6 +103,7 @@ public class Simulation extends JFrame implements ActionListener{
 		SocialDistance.PaintLabels(true);
 		SocialDistance.setMinorTickSpacing(1);
 		SocialDistance.setMajorTickSpacing(10);
+		SocialDistance.setPosition(200,155);
 		
 		
 		
