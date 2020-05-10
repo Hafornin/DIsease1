@@ -69,45 +69,31 @@ public class MultipleGroupsPanel extends SimulationPanel{
 	}
 	
 	public void travelBetweenGroups() {
-		int totalr = 0;
-		int totala = 0;
 		int[] order = randomGroupOrder();
 		LinkedList<Individual>[] temporaryGroups = new LinkedList[boxes.length];
+		for(int i=0;i<temporaryGroups.length;i++) {
+			temporaryGroups[i] = new LinkedList<Individual>();
+		}
 		for(int i=0;i<boxes.length;i++) {
 			for(int j=0;j<order.length;j++) {
 				int a = order[j];
 				if(i!=a) {
-					temporaryGroups[a] = new LinkedList<Individual>();
 					int k = 0;
-					int r = 0;
 					while(k<boxes[i].getGroup().size()) {
 						double test = Math.random();
 						if(test<boxes[i].getLeaveGroupProba()*boxes[a].getEnterGroupProba()) {
 							temporaryGroups[a].add(boxes[i].getGroup().get(k));
 							boxes[i].remove(k);	
-							r++;
 							k--;
-							totalr++;
 						}
 						k++;
 					}
-					//int ad =temporaryGroups[a].size();
-					//System.out.println("rem : "+r+" ad : "+ad);
 				}
 			}
 		}
 		for(int i=0;i<boxes.length;i++) {
-			//System.out.println(i);
-			//System.out.println("1 : "+boxes[i].getGroup().size());
-			/*for(int j=0;j<temporaryGroups[i].size();j++) {
-				boxes[i].add(temporaryGroups[i].get(j));
-				totala++;
-			}*/
-			//System.out.println("2 : "+boxes[i].getGroup().size());
 			boxes[i].getGroup().addAll(temporaryGroups[i]);
-			totala += temporaryGroups[i].size();
-		}
-		System.out.println("removed : "+totalr+"  added : "+totala);
+		}		
 	}
 	
 	public void updateDataValues() {
