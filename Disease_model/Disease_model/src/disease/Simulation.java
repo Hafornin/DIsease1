@@ -34,7 +34,7 @@ public class Simulation extends JFrame implements ActionListener{
 		DELTA_T = dt;
 		timer = new Timer(DELTA_T,this);
 		groups = s;
-		s.startQuarantine();
+		s.startTravel();
 		
 		setTitle("Simulation");
 		setSize(1500, 900);
@@ -93,6 +93,8 @@ public class Simulation extends JFrame implements ActionListener{
 		InfectionCoeff.setMajorTickSpacing(10);
 		InfectionCoeff.setVisible(true);
 		
+		parametersPanel.add(InfectionCoeff);
+		
 		IdentifiedProportion.setMaximum(100);
 		IdentifiedProportion.setMinimum(0);
 		IdentifiedProportion.setValue(30);
@@ -100,6 +102,9 @@ public class Simulation extends JFrame implements ActionListener{
 		IdentifiedProportion.setPaintLabels(true);
 		IdentifiedProportion.setMinorTickSpacing(1);
 		IdentifiedProportion.setMajorTickSpacing(10);
+		IdentifiedProportion.setVisible(true);
+		
+		parametersPanel.add(IdentifiedProportion);
 		
 		SocialDistance.setMaximum(100);
 		SocialDistance.setMinimum(0);
@@ -108,23 +113,13 @@ public class Simulation extends JFrame implements ActionListener{
 		SocialDistance.setPaintLabels(true);
 		SocialDistance.setMinorTickSpacing(1);
 		SocialDistance.setMajorTickSpacing(10);
+		SocialDistance.setVisible(true);
 		
+		parametersPanel.add(SocialDistance);
 		
-		
-		JPanel leftPanel = new JPanel();
-		leftPanel.setBackground(Color.white);
-		add(leftPanel);
-		leftPanel.setLocation(0,0);
-		leftPanel.setSize(30,900);
-		
-		JPanel topPanel = new JPanel();
-		topPanel.setBackground(Color.white);
-		add(topPanel);
-		topPanel.setLocation(0,0);
-		topPanel.setSize(750,30);
 		
 		add(groups);
-		groups.setLocation(30,30);	
+		groups.setLocation(0,0);	
 		groups.setVisible(true);
 		
 		JFreeChart graph = ChartFactory.createLineChart(
@@ -142,8 +137,7 @@ public class Simulation extends JFrame implements ActionListener{
 		//chartPanel.setMouseZoomable( true , false );         
 	    add( graphPanel );
 	    graphPanel.setLocation(750,400);
-	    graphPanel.setVisible(true);
-	
+	    graphPanel.setVisible(true);	
 	    
 		timer.start();
 	}

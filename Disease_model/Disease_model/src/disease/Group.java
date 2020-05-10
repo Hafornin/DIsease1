@@ -1,87 +1,197 @@
+/**
+ * Each instance of Group corresponds to a box in our simulation.
+ * It is a JPanel displaying a collection of individuals and making them interact and move.
+ */
+
 package disease;
+
 import java. awt.*;
 import javax.swing.*;
 import java.util.*;
 
 public class Group extends JPanel{
 	
-//Attributes : 
-	private int numSusceptible; //number of susceptible persons in the simulation
-	private int numInfected; //number of infected persons in the simulation
-	private int numRecovered; //number of recovered persons in the simulation
-	private int numIdentified; //number of identified infected persons in the simulation
+//ATTRIBUTES :
 	
-	private double leaveGroupProba = 0.1;
-	private double enterGroupProba = 0.1;
+//=================== Attributes related to the collection of individuals we run the simulation on ========================
+
+	/**
+	 * the collection of individuals we run the simulation on
+	 */
+	private LinkedList<Individual> group;
 	
-	private LinkedList<Individual> group; //group of people we run the simulation on
-	private Disease disease;
+	/**
+	 * the initial size of the collection of individuals we run the simulation on
+	 */
 	private final int SIZE;
+	
+	/**
+	 * the disease parameters for the individuals of this group
+	 */
+	private Disease disease;
+	
+	
+//=================== Attributes related to the display of the box ========================
+	
+	/***
+	 * the x position of the box
+	 */
 	private final int X;
+	/**
+	 * the y position of the box
+	 */
 	private final int Y;
+	/**
+	 * the width of the box
+	 */
 	private final int X_LENGTH;
+	/*
+	 * the height of the box
+	 */
 	private final int Y_LENGTH;
-	//DATA STORAGE
+	
+	
+//=================== Number of susceptible, infected, recovered and identified individuals in the group ========================
+
+	/**
+	 * the number of susceptible persons in the the collection of individuals we run the simulation on
+	 */
+	private int numSusceptible;
+	/**
+	 * the number of infected persons in the collection of individuals we run the simulation on
+	 */
+	private int numInfected;
+	/**
+	 * the number of recovered persons in the collection of individuals we run the simulation on
+	 */
+	private int numRecovered;
+	/**
+	 * the number of identified infected persons in the collection of individuals we run the simulation on
+	 */
+	private int numIdentified;
+	
+	
+//=================== Attributes used to implement travel between groups ========================
+
+	/**
+	 * the probability for an individual to leave this group
+	 */
+	private double leaveGroupProba = 0.1;
+	/**
+	 * the probability for an individual to enter this group
+	 */
+	private double enterGroupProba = 0.1;
 
 	
-//Constructor :
+//CONSTRUCTOR :
+	
+	/**
+	 * Creates an instance of Group
+	 * 
+	 * @param s the initial size of the collection of individuals we run the simulation on
+	 * @param x the x position of the box
+	 * @param y the y position of the box
+	 * @param xl the width of the box
+	 * @param yl the height of the box
+	 * @param d the disease parameters for the individuals of this group
+	 */
 	public Group(int s, int x, int y, int xl, int yl, Disease d){
-		SIZE = s;
+		
+		//affecting the position and dimensions of the box
 		X = x;
 		Y = y;
 		X_LENGTH = xl;
 		Y_LENGTH = yl;
-		disease = d;
-		group = new LinkedList<>();
+		
+		disease = d; //affecting the disease parameters for this group
+		
+		//creating the collection of individuals we run the simulation on
+		SIZE = s; //initial number of individuals
+		group = new LinkedList<>(); //initializing the list of individuals
 		for(int i=0;i<SIZE;i++){
-			group.add(new Individual(disease, X+X_LENGTH, Y+Y_LENGTH, X, Y));
+			group.add(new Individual(disease, X+X_LENGTH, Y+Y_LENGTH, X, Y)); //creating instances of Individual in the list
 		}
+		
+		//setting the number of susceptible, infected, recovered and identified individuals in this group to 0
 		numSusceptible = 0;
 		numInfected = 0;
 		numRecovered = 0;
 		numIdentified =0;
 		
-		setVisible(true);
-		setSize((int) (X_LENGTH*1.1),(int) (Y_LENGTH*1.1));
+		setSize((int) (X_LENGTH+50),(int) (Y_LENGTH+50)); //setting the size of the JPanel
+		
+		setVisible(true); //making the JPanel visible
 	}
 	
 	
-//Getters :
+//GETTERS :
+	
+	/**
+	 * Gets the number of susceptible individuals in thsi group
+	 * @return the number of susceptible individuals in this group
+	 */
 	public int getNumSusceptible(){
 		return numSusceptible;
 	}
 	
+	/**
+	 * Gets the number of infected individuals in this group
+	 * @return the number of infected individuals in this group
+	 */
 	public int getNumInfected(){
 		return numInfected;
 	}
 	
+	/**
+	 * Gets the number of recovered individuals in this group
+	 * @return the number of recovered individuals in this group
+	 */
 	public int getNumRecovered(){
 		return numRecovered;
 	}
 	
+	/**
+	 * Gets the number of identified individuals in this group
+	 * @return the number of identified individuals in this group
+	 */
 	public int getNumIdentified(){
 		return numIdentified;
 	}
 	
+	/**
+	 * Gets the collection of individuals in this group
+	 * @return the collection of individuals in this group
+	 */
 	public LinkedList<Individual> getGroup(){
 		return group;
 	}
 	
+	/**
+	 * Gets the initial number of individuals in this group
+	 * @return the initial number of individuals in this group (SIZE)
+	 */
 	public int getGroupSize() {
 		return SIZE;
 	}
 	
+	/**
+	 * Gets the probability for an individual to leave this group
+	 * @return the probability for an individual to leave this group
+	 */
 	public double getLeaveGroupProba() {
 		return leaveGroupProba;
 	}
 	
+	/**
+	 * Gets the probability for an individual to enter this group
+	 * @return the probability for an individual to enter this group
+	 */
 	public double getEnterGroupProba() {
 		return enterGroupProba;
 	}
+
 	
-//Setters :
-	
-//Methods :
+//METHODS :
 	
 	//Method updating the number of susceptible, infected and recovered individuals
 	public void updateValues(){
@@ -154,6 +264,7 @@ public class Group extends JPanel{
 		}
 	}
 	
+
 //Display :
 
 	public void paintComponent(Graphics g){

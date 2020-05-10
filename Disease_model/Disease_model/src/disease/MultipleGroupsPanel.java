@@ -32,16 +32,16 @@ public class MultipleGroupsPanel extends SimulationPanel{
 			add(boxes[i]);
 		}
 		
-		boxes[0].setLocation(20,40);
-		boxes[1].setLocation(260,40);
-		boxes[2].setLocation(500,40);
+		boxes[0].setLocation(20,60);
+		boxes[1].setLocation(260,60);
+		boxes[2].setLocation(500,60);
 		
-		boxes[3].setLocation(20,280);
-		boxes[4].setLocation(260,280);
-		boxes[5].setLocation(500,280);
+		boxes[3].setLocation(20,300);
+		boxes[4].setLocation(260,300);
+		boxes[5].setLocation(500,300);
 		
-		boxes[6].setLocation(20,520);
-		boxes[7].setLocation(260,520);
+		boxes[6].setLocation(20,540);
+		boxes[7].setLocation(260,540);
 	
 		
 		
@@ -93,7 +93,15 @@ public class MultipleGroupsPanel extends SimulationPanel{
 		return t;		
 	}
 	
-	public void travelBetweenGroups() {
+	public void startTravel() {
+		travel = true;
+	}
+	
+	public void stopTravel() {
+		travel = false;
+	}
+	
+	public void travel() {
 		int[] order = randomGroupOrder();
 		LinkedList<Individual>[] temporaryGroups = new LinkedList[boxes.length];
 		for(int i=0;i<temporaryGroups.length;i++) {

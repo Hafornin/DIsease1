@@ -14,7 +14,7 @@ public class SimulationPanel extends JPanel{
 	protected int numIdentified; //number of identified infected persons in the simulation
 	protected int iteration;
 	protected int day;
-	protected final int ITERATIONS_PER_DAY = 10;
+	protected final int ITERATIONS_PER_DAY = 20;
 	protected Disease disease;
 	
 	protected boolean quarantining;
@@ -51,18 +51,21 @@ public class SimulationPanel extends JPanel{
 	}
 	
 	//Methods :	
+	
+	//travel
 	public void startTravel() {
-		travel = true;
-	}
-	
-	public void stopTravel() {
-		travel = false;
-	}
-	
-	public void travelBetweenGroups() {
 		
 	}
 	
+	public void stopTravel() {
+		
+	}
+	
+	public void travel() {
+		
+	}
+	
+	//quarantine
 	public void startQuarantine() {
 		
 	}
@@ -97,9 +100,9 @@ public class SimulationPanel extends JPanel{
 			}
 			i++;
 		}
-	}
+	}	
 	
-	
+	//normal
 	public void fillDataset() {
 		dataset.addValue(numInfected, "Infected", Integer.toString(day));
 		dataset.addValue(numRecovered, "Recovered", Integer.toString(day));
@@ -122,7 +125,7 @@ public class SimulationPanel extends JPanel{
 			inQuarantine();
 		}
 		if(travel) {
-			travelBetweenGroups();
+			travel();
 		}
 		updateValues();
 		iteration ++;
