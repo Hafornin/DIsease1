@@ -34,6 +34,7 @@ public class Simulation extends JFrame implements ActionListener{
 		DELTA_T = dt;
 		timer = new Timer(DELTA_T,this);
 		groups = s;
+		s.startQuarantine();
 		
 		setTitle("Simulation");
 		setSize(1500, 900);
@@ -79,6 +80,9 @@ public class Simulation extends JFrame implements ActionListener{
 		Mortality.setPaintLabels(true);
 		Mortality.setMinorTickSpacing(1);
 		Mortality.setMajorTickSpacing(10);
+		Mortality.setVisible(true);
+		
+		parametersPanel.add(Mortality);
 		
 		InfectionCoeff.setMaximum(100);
 		InfectionCoeff.setMinimum(0);
@@ -87,6 +91,7 @@ public class Simulation extends JFrame implements ActionListener{
 		InfectionCoeff.setPaintLabels(true);
 		InfectionCoeff.setMinorTickSpacing(1);
 		InfectionCoeff.setMajorTickSpacing(10);
+		InfectionCoeff.setVisible(true);
 		
 		IdentifiedProportion.setMaximum(100);
 		IdentifiedProportion.setMinimum(0);
@@ -103,7 +108,6 @@ public class Simulation extends JFrame implements ActionListener{
 		SocialDistance.setPaintLabels(true);
 		SocialDistance.setMinorTickSpacing(1);
 		SocialDistance.setMajorTickSpacing(10);
-		
 		
 		
 		

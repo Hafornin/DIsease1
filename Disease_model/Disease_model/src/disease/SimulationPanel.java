@@ -17,14 +17,15 @@ public class SimulationPanel extends JPanel{
 	protected final int ITERATIONS_PER_DAY = 10;
 	protected Disease disease;
 	
-	private boolean quarantine;
+	protected boolean quarantining;
+	protected boolean travel;
 	
 	
 	//Constructor :
 	public SimulationPanel(Disease d){
 		disease = d;
 		
-		setSize(720,870);         
+		setSize(750,900);         
 		setVisible(true);
 		setBackground(Color.white);
 		
@@ -38,7 +39,8 @@ public class SimulationPanel extends JPanel{
 		iteration = 0;
 		day = 0;
 		
-		quarantine = false;
+		quarantining = false;
+		travel = true;
 		
 	}
 	
@@ -49,34 +51,48 @@ public class SimulationPanel extends JPanel{
 	}
 	
 	//Methods :	
+	public void startTravel() {
+		travel = true;
+	}
+	
+	public void stopTravel() {
+		travel = false;
+	}
+	
+	public void travelBetweenGroups() {
+		
+	}
 	
 	public void startQuarantine() {
 		
 	}
 	
-	public void endQuarantine() {
+	public void inQuarantine() {
 		
 	}
 	
-	public void quarantine() {
+	public void outQuarantine() {
 		
 	}
 	
-	public void quarantineGroup(Group g, Group q) {
+	public void quarantineToGroup(Group q, Group g) {
+		int i = 0;
+		while(i<q.getGroup().size()) {
+			if(q.getGroup().get(i).getState()=="recovered") {
+				g.add(q.getGroup().get(i));
+				q.remove(i);
+				i--;
+			}
+			i++;
+		}
+	}
+	
+	public void groupToQuarantine(Group g, Group q) {
 		int i = 0;
 		while(i<g.getGroup().size()) {
 			if(g.getGroup().get(i).getState()=="infected" && g.getGroup().get(i).isIdentified()) {
 				q.add(g.getGroup().get(i));
 				g.remove(i);
-				i--;
-			}
-			i++;
-		}
-		i = 0;
-		while(i<q.getGroup().size()) {
-			if(q.getGroup().get(i).getState()=="recovered") {
-				g.add(q.getGroup().get(i));
-				q.remove(i);
 				i--;
 			}
 			i++;
@@ -91,15 +107,24 @@ public class SimulationPanel extends JPanel{
 		dataset.addValue(numIdentified, "Identified", Integer.toString(day));
 	}
 	
-	public void update() {
+	public void updateConfig() {
+		
+	}
+	
+	public void updateValues() {
 		
 	}
 	
 	public void iterate(){
-		update();
-		if(quarantine) {
-			quarantine();
+		updateConfig();
+		outQuarantine();
+		if(quarantining) {
+			inQuarantine();
 		}
+		if(travel) {
+			travelBetweenGroups();
+		}
+		updateValues();
 		iteration ++;
 		int thisDay = iteration/ITERATIONS_PER_DAY;
 		if(thisDay != day){

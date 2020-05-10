@@ -9,27 +9,52 @@ public class MultipleGroupsPanel extends SimulationPanel{
 	
 	//Attributes :
 	private Group[] boxes;
+	private Group[] quarantine;
 	
 	
 	//Constructor :
-	public MultipleGroupsPanel(Disease d , int nGroups){
+	public MultipleGroupsPanel(Disease d){
 		super(d);
-		boxes = new Group[nGroups];
-		for(int i=0;i<nGroups;i++){
+		boxes = new Group[8];
+		for(int i=0;i<boxes.length;i++){
 			boxes[i] = new Group(disease.getGroupSize(), 10, 10, 200, 200, d);
 		}
 		
 		for(int i=0;i<boxes.length-7;i++){
-			for(int j=0;j<60;j++) {
+			for(int j=0;j<30;j++) {
 				boxes[i].getGroup().get(j).initialInfect();
 			}
 		}
 		
-		setLayout(new GridLayout(3,3));
+		setLayout(null);
 		
 		for(int i=0;i<boxes.length;i++){
 			add(boxes[i]);
 		}
+		
+		boxes[0].setLocation(20,40);
+		boxes[1].setLocation(260,40);
+		boxes[2].setLocation(500,40);
+		
+		boxes[3].setLocation(20,280);
+		boxes[4].setLocation(260,280);
+		boxes[5].setLocation(500,280);
+		
+		boxes[6].setLocation(20,520);
+		boxes[7].setLocation(260,520);
+	
+		
+		
+		//quarantine
+		quarantine = new Group[boxes.length];
+		for(int i=0;i<quarantine.length;i++){
+			quarantine[i] = new Group(0, 10, 10, 200, 200, disease);
+			add(quarantine[i]);
+			quarantine[i].setLocation(500,520);
+			quarantine[i].setVisible(false);
+		}
+		
+		
 	}
 	
 	//Getters :
@@ -96,35 +121,53 @@ public class MultipleGroupsPanel extends SimulationPanel{
 		}		
 	}
 	
-	public void update() {
+	public void updateConfig() {
+		for(int i=0;i<boxes.length;i++){
+			boxes[i].move();
+			boxes[i].infect();
+			boxes[i].identify();
+		}
+		for(int i=0;i<quarantine.length;i++){
+			quarantine[i].move();
+			quarantine[i].infect();
+		}
+	}	
+	
+	public void updateValues() {
 		numSusceptible = 0;
 		numInfected = 0;
 		numRecovered = 0;
 		numIdentified = 0;
-		travelBetweenGroups();
 		for(int i=0;i<boxes.length;i++){
-			boxes[i].move();
-			boxes[i].infect();
 			boxes[i].updateValues();
 			numSusceptible += boxes[i].getNumSusceptible();
 			numInfected += boxes[i].getNumInfected();
 			numRecovered += boxes[i].getNumRecovered();
 			numIdentified += boxes[i].getNumIdentified();
 		}
-	}	
+		for(int i=0;i<quarantine.length;i++){
+			quarantine[i].updateValues();
+			numInfected += quarantine[i].getNumInfected();
+		}
+	}
 	
 	
 	public void startQuarantine() {
-		
+		quarantining = true;
+		for(int i=0;i<quarantine.length;i++){
+			quarantine[i].setVisible(true);
+		}
 	}
 	
-	public void endQuarantine() {
-		
-	}
-	
-	public void quarantine() {
+	public void inQuarantine() {
 		for(int i=0;i<boxes.length;i++){
-			
+			groupToQuarantine(boxes[i], quarantine[i]);
+		}
+	}
+	
+	public void outQuarantine() {
+		for(int i=0;i<boxes.length;i++){
+			quarantineToGroup(quarantine[i], boxes[i]);
 		}
 	}
 	

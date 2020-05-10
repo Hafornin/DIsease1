@@ -157,12 +157,11 @@ public class Individual {
 	}
 	
 	//Method deciding wether a person is identified as infected
-	public boolean identify(){
+	public void identify(){
 		double test = Math.random();
 		if(state=="infected" && test<disease.getIdentifiedProportion()){
 			identified = true;
 		}
-		return identified;
 	}
 	
 //Moving the individuals :	

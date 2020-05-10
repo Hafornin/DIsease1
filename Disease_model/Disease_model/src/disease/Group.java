@@ -42,7 +42,7 @@ public class Group extends JPanel{
 		numIdentified =0;
 		
 		setVisible(true);
-		setSize(X_LENGTH,Y_LENGTH);
+		setSize((int) (X_LENGTH*1.1),(int) (Y_LENGTH*1.1));
 	}
 	
 	
@@ -88,6 +88,7 @@ public class Group extends JPanel{
 		numSusceptible = 0;
 		numInfected = 0;
 		numRecovered = 0;
+		numIdentified = 0;
 		for(int i=0;i<group.size();i++){
 			if (group.get(i).getState()=="susceptible"){
 				numSusceptible++;
@@ -97,6 +98,9 @@ public class Group extends JPanel{
 			}
 			if(group.get(i).getState()=="recovered"){
 				numRecovered++;
+			}
+			if(group.get(i).isIdentified()){
+				numIdentified++;
 			}
 		}
     }
@@ -141,6 +145,12 @@ public class Group extends JPanel{
 		for(int i=0;i<group.size();i++){
 			group.get(i).updateTime();
 			group.get(i).updateState();
+		}
+	}
+	
+	public void identify() {
+		for(int i=0;i<group.size();i++){
+			group.get(i).identify();
 		}
 	}
 	

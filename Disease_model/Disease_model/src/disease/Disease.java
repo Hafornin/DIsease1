@@ -46,10 +46,6 @@ public class Disease {
 		return infectionTimeDays;
 	}
 	
-	public double getTravelProba(){
-		return travelProba;
-	}
-	
 	public int getGroupSize(){
 		return groupSize;
 	}
