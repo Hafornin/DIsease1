@@ -70,34 +70,46 @@ public class Fenetre extends JFrame {
 		JSlider IdentifiedProportion = new JSlider();
 		JSlider SocialDistance = new JSlider();
 		
+		parametersPanel.add(Mortality);
+		parametersPanel.add(InfectionCoeff);
+		parametersPanel.add(IdentifiedProportion);
+		parametersPanel.add(SocialDistance);
+		
 		Mortality.setMaximum(100);
 		Mortality.setMinimum(0);
 		Mortality.setValue(30);
 		Mortality.setMinorTickSpacing(1);
 		Mortality.setMajorTickSpacing(10);
-		//Mortality.setPosition(200,5);
+		Mortality.setPaintTicks(true);
+		Mortality.setPaintLabels(true);
+		Mortality.setLocation(200,5);
 		
 		InfectionCoeff.setMaximum(100);
 		InfectionCoeff.setMinimum(0);
 		InfectionCoeff.setValue(30);
-		
+		InfectionCoeff.setPaintTicks(true);
 		InfectionCoeff.setMinorTickSpacing(1);
 		InfectionCoeff.setMajorTickSpacing(10);
-		//InfectionCoeff.setPosition(200,55);
+		InfectionCoeff.setPaintLabels(true);
+		InfectionCoeff.setLocation(200,55);
 		
 		IdentifiedProportion.setMaximum(100);
 		IdentifiedProportion.setMinimum(0);
 		IdentifiedProportion.setValue(30);
 		IdentifiedProportion.setMinorTickSpacing(1);
 		IdentifiedProportion.setMajorTickSpacing(10);
-		//IdentifiedProportion.setPosition(200,105);
+		IdentifiedProportion.setPaintTicks(true);
+		IdentifiedProportion.setPaintLabels(true);
+		IdentifiedProportion.setLocation(200,105);
 		
 		SocialDistance.setMaximum(100);
 		SocialDistance.setMinimum(0);
 		SocialDistance.setValue(30);
 		SocialDistance.setMinorTickSpacing(1);
 		SocialDistance.setMajorTickSpacing(10);
-		//SocialDistance.setPosition(200,155);
+		SocialDistance.setPaintTicks(true);
+		SocialDistance.setPaintLabels(true);
+		SocialDistance.setLocation(200,155);
 	
 		
 		//Stop.setBounds(5,5,10,30);
