@@ -11,15 +11,16 @@ import java.awt.* ;
 import org.jfree.chart.JFreeChart;
 
 public class ParameterWindow2 extends JFrame implements ActionListener{
-	JButton MainButton;
+	JButton MainButton1;
+	JButton MainButton2;
 	JButton ResetButton;
 	
 	JButton HelpButton;
-	JTextField firstTF;
+	
 	JTextField secondTF;
 	JTextField thirdTF;
 	JTextField fourthTF;
-	JTextField fifthTF;
+	
 	JTextArea secondTA;
 	//ImageIcon icon;
 	
@@ -41,9 +42,7 @@ public class ParameterWindow2 extends JFrame implements ActionListener{
 		Help = new HelpWindow();
 		
 		
-		firstTF = new JTextField();
-		JLabel firstLabel = new JLabel();
-		firstLabel.setText("Number of groups :");
+		
 	
 		
 		secondTF = new JTextField();
@@ -61,16 +60,17 @@ public class ParameterWindow2 extends JFrame implements ActionListener{
 		fourthLabel.setText("Infectious period :");
 	
 		
-		fifthTF = new JTextField();
-		JLabel fifthLabel = new JLabel();
-		fifthLabel.setText("Simulation duration :");
+		
 
 		//ImageIcon icon = new ImageIcon("/home/haf/Documents/Travail/INSA/73/Info/Java/IHM/CodePourDebuter/insa_logo.png");
 		//JLabel logo = new JLabel(icon);
 		//logo.setBounds(200,75,136,55);
 		
-		MainButton = new JButton("Start simulation");
-		MainButton.addActionListener(this);
+		MainButton1 = new JButton("Start simulation with 1 group");
+		MainButton1.addActionListener(this);
+		
+		MainButton2 = new JButton("Start simulation with several groups");
+		MainButton2.addActionListener(this);
 		
 		ResetButton = new JButton("Reset");
 		ResetButton.addActionListener(this);
@@ -94,17 +94,18 @@ public class ParameterWindow2 extends JFrame implements ActionListener{
 		
 		JPanel firstPanel = new JPanel();
 		firstPanel.setLayout(layout);
-		firstPanel.add(firstLabel);
-		firstPanel.add(firstTF);
+		
+		
 		firstPanel.add(secondLabel);
 		firstPanel.add(secondTF);
 		firstPanel.add(thirdLabel);
 		firstPanel.add(thirdTF);
 		firstPanel.add(fourthLabel);
 		firstPanel.add(fourthTF);
-		firstPanel.add(fifthLabel);
-		firstPanel.add(fifthTF);
-		firstPanel.add(MainButton);
+		
+	
+		firstPanel.add(MainButton1);
+		firstPanel.add(MainButton2);
 		firstPanel.add(ResetButton);
 		
 		firstPanel.add(HelpButton);
@@ -114,13 +115,9 @@ public class ParameterWindow2 extends JFrame implements ActionListener{
 		
 		
 		//Position of firstTF and firstLabel
-		layout.putConstraint(SpringLayout.WEST, firstLabel, 5, SpringLayout.WEST, firstPanel);
-		layout.putConstraint(SpringLayout.NORTH,firstLabel, 5, SpringLayout.NORTH, firstPanel);
 		
-		layout.putConstraint(SpringLayout.WEST, firstTF, 5, SpringLayout.EAST, firstLabel);
-		layout.putConstraint(SpringLayout.NORTH,firstTF, 5, SpringLayout.NORTH, firstPanel);
 		
-		layout.putConstraint(SpringLayout.EAST, firstTF, 50, SpringLayout.WEST, firstTF);
+		
 		
 		
 		//Position of secondTF and secondLabel
@@ -147,17 +144,15 @@ public class ParameterWindow2 extends JFrame implements ActionListener{
 		layout.putConstraint(SpringLayout.NORTH, fourthTF, 90, SpringLayout.NORTH, firstPanel);
 		layout.putConstraint(SpringLayout.EAST, fourthTF, 50, SpringLayout.WEST, fourthTF);
 		
-		//Position of 5th
-		layout.putConstraint(SpringLayout.WEST, fifthLabel, 5, SpringLayout.WEST, firstPanel);
-		layout.putConstraint(SpringLayout.NORTH,fifthLabel, 120, SpringLayout.NORTH, firstPanel);
 		
-		layout.putConstraint(SpringLayout.WEST, fifthTF, 5, SpringLayout.EAST, fifthLabel);
-		layout.putConstraint(SpringLayout.NORTH, fifthTF, 120, SpringLayout.NORTH, firstPanel);
-		layout.putConstraint(SpringLayout.EAST, fifthTF, 50, SpringLayout.WEST, fifthTF);
 		
-		//Position of Button 1
-		layout.putConstraint(SpringLayout.WEST, MainButton, 50, SpringLayout.WEST, firstPanel);
-		layout.putConstraint(SpringLayout.SOUTH, MainButton, -50, SpringLayout.SOUTH, firstPanel);
+		//Position of MainButton 1
+		layout.putConstraint(SpringLayout.WEST, MainButton1, 25, SpringLayout.WEST, firstPanel);
+		layout.putConstraint(SpringLayout.SOUTH, MainButton1, -50, SpringLayout.SOUTH, firstPanel);
+		
+		//Position of MainButton 2
+		layout.putConstraint(SpringLayout.WEST, MainButton2, 275, SpringLayout.WEST, firstPanel);
+		layout.putConstraint(SpringLayout.SOUTH, MainButton2, -50, SpringLayout.SOUTH, firstPanel);
 		
 		//Position of Button 2
 		layout.putConstraint(SpringLayout.WEST, ResetButton, 250, SpringLayout.WEST, firstPanel);
@@ -194,15 +189,9 @@ public class ParameterWindow2 extends JFrame implements ActionListener{
 		
 	}
 	
-	public int getNumOfGroups(){
-		int a = Integer.parseInt(firstTF.getText());
-		return a;
-	}
 	
-	public int getSimDuration(){
-		int a = Integer.parseInt(fifthTF.getText());
-		return a;
-	}
+	
+	
 	
 	
 	public int getPop(){
@@ -217,23 +206,13 @@ public class ParameterWindow2 extends JFrame implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e){
 		
-		if(e.getSource() == MainButton){
+		if(e.getSource() == MainButton1){
 			
 			
-			int nb = Integer.parseInt(firstTF.getText());
-			if(nb<0){
-				JOptionPane.showMessageDialog(this,"Please enter a positive number.");
-			
-			}else{
-				System.out.println("Button activated" + nb);
-				//secondTA.append(myListeCourbe.get(nb-1).toString()+"\n");
-				//SecondWindow.addShape(myListeCourbe.get(nb));
-				//SecondWindow.setVisible(true);
-				//SecondWindow.t.start();
-				//SecondWindow.time=0;
+		
 
 			
-		}
+		
 		}
 		if(e.getSource() == ResetButton){
 			secondTA.setText("");

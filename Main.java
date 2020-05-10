@@ -16,7 +16,7 @@ public class Main{
 	public static void main(String[] args){
 		
 		
-		ParameterWindow TestWindow = new ParameterWindow();
+		ParameterWindow2 TestWindow = new ParameterWindow2();
    }
    
 }
