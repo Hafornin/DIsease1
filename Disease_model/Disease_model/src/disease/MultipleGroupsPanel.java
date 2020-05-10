@@ -96,7 +96,7 @@ public class MultipleGroupsPanel extends SimulationPanel{
 		}		
 	}
 	
-	public void updateDataValues() {
+	public void update() {
 		numSusceptible = 0;
 		numInfected = 0;
 		numRecovered = 0;
@@ -112,6 +112,21 @@ public class MultipleGroupsPanel extends SimulationPanel{
 			numIdentified += boxes[i].getNumIdentified();
 		}
 	}	
+	
+	
+	public void startQuarantine() {
+		
+	}
+	
+	public void endQuarantine() {
+		
+	}
+	
+	public void quarantine() {
+		for(int i=0;i<boxes.length;i++){
+			
+		}
+	}
 	
 }
 

@@ -17,6 +17,8 @@ public class SimulationPanel extends JPanel{
 	protected final int ITERATIONS_PER_DAY = 10;
 	protected Disease disease;
 	
+	private boolean quarantine;
+	
 	
 	//Constructor :
 	public SimulationPanel(Disease d){
@@ -35,6 +37,9 @@ public class SimulationPanel extends JPanel{
 		
 		iteration = 0;
 		day = 0;
+		
+		quarantine = false;
+		
 	}
 	
 	//Getters :
@@ -45,6 +50,40 @@ public class SimulationPanel extends JPanel{
 	
 	//Methods :	
 	
+	public void startQuarantine() {
+		
+	}
+	
+	public void endQuarantine() {
+		
+	}
+	
+	public void quarantine() {
+		
+	}
+	
+	public void quarantineGroup(Group g, Group q) {
+		int i = 0;
+		while(i<g.getGroup().size()) {
+			if(g.getGroup().get(i).getState()=="infected" && g.getGroup().get(i).isIdentified()) {
+				q.add(g.getGroup().get(i));
+				g.remove(i);
+				i--;
+			}
+			i++;
+		}
+		i = 0;
+		while(i<q.getGroup().size()) {
+			if(q.getGroup().get(i).getState()=="recovered") {
+				g.add(q.getGroup().get(i));
+				q.remove(i);
+				i--;
+			}
+			i++;
+		}
+	}
+	
+	
 	public void fillDataset() {
 		dataset.addValue(numInfected, "Infected", Integer.toString(day));
 		dataset.addValue(numRecovered, "Recovered", Integer.toString(day));
@@ -52,12 +91,15 @@ public class SimulationPanel extends JPanel{
 		dataset.addValue(numIdentified, "Identified", Integer.toString(day));
 	}
 	
-	public void updateDataValues() {
+	public void update() {
 		
 	}
 	
 	public void iterate(){
-		updateDataValues();
+		update();
+		if(quarantine) {
+			quarantine();
+		}
 		iteration ++;
 		int thisDay = iteration/ITERATIONS_PER_DAY;
 		if(thisDay != day){
@@ -66,6 +108,8 @@ public class SimulationPanel extends JPanel{
 		}
 		repaint();
 	}
+	
+	
 		
 	
 }

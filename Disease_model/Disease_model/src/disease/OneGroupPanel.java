@@ -1,5 +1,6 @@
 package disease;
 import java. awt.*;
+
 import org.jfree.data.category.DefaultCategoryDataset;
 
 public class OneGroupPanel extends SimulationPanel{
@@ -26,7 +27,7 @@ public class OneGroupPanel extends SimulationPanel{
 	
 	//Methods :
 	
-	public void updateDataValues() {
+	public void update() {
 		box.move();
 		box.infect();
 		box.updateValues();
