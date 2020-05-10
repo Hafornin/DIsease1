@@ -64,6 +64,10 @@ public class Individual {
 	public Vector getPosition(){
 		return position;
 	}
+	
+	public boolean isIdentified() {
+		return identified;
+	}
 
 
 	
