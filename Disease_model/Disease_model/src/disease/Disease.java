@@ -9,13 +9,13 @@ public class Disease {
 	private double r0Exp; //experimental value for r0 (number of persons infected on average by one person while they are sick)
 	private double identifiedProportion; //proportion of infected people identified
 	private double centralPointTripProba; //probability of going to the central point
-	private double socialDistanceRadius; //distance at which individuals repel each other when social distancing is active
 	private double travelBetweenGroups;
+	private double socialDistanceProportion;
 	private int groupSize;
 	
 	//Constructor :
 	
-	public Disease(int gs, int itd, double ir, double ic, double ip, double cptp, double sdr){
+	public Disease(int gs, int itd, double ir, double ic, double ip, double cptp){
 		groupSize = gs;
 		infectionTimeDays = itd;
 		infectionRadius = ir;
@@ -23,7 +23,7 @@ public class Disease {
 		r0Exp = 0;
 		identifiedProportion =ip;
 		centralPointTripProba = cptp;
-		socialDistanceRadius = sdr;
+		travelBetweenGroups = 0.0;
 	}
 	
 	//Getters :
@@ -51,12 +51,12 @@ public class Disease {
 		return groupSize;
 	}
 	
-	public double getSocialDistanceRadius(){
-		return socialDistanceRadius;
-	}
-	
 	public double getTravelBetweenGroups() {
 		return travelBetweenGroups;
+	}
+	
+	public double getSocialDistanceProportion() {
+		return socialDistanceProportion;
 	}
 	
 	//Setters :
@@ -69,24 +69,20 @@ public class Disease {
 		identifiedProportion = ip;
 	}
 	
-	public void setInfectionRadius(double ir){
-		infectionRadius = ir;
-	}
-	
 	public void setCentralPointTripProba(double cptp){
 		centralPointTripProba = cptp;
 	}
 	
-	public void setInfectionTimeDays(double itd){
+	public void setInfectionTimeDays(int itd){
 		infectionTimeDays = itd;
-	}
-	
-	public void setSocialDistanceRadius(double sdr){
-		socialDistanceRadius = sdr;
 	}
 	
 	public void setTravelBetweenGroups(double tbg) {
 		travelBetweenGroups = tbg;
+	}
+	
+	public void setSocialDistanceProportion(double sdp) {
+		socialDistanceProportion = sdp;
 	}
 }
 

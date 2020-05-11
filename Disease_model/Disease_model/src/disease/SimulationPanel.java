@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 
 import org.jfree.data.category.DefaultCategoryDataset;
 
-public class SimulationPanel extends JPanel{
+public abstract class SimulationPanel extends JPanel{
 	
 	//Attributes :
 	protected DefaultCategoryDataset  dataset;	
@@ -40,7 +40,7 @@ public class SimulationPanel extends JPanel{
 		day = 0;
 		
 		quarantining = false;
-		travel = false;
+		travel = true;
 		
 	}
 	
@@ -56,6 +56,10 @@ public class SimulationPanel extends JPanel{
 	
 	public boolean getTravel() {
 		return travel;
+	}
+	
+	public Disease getDisease() {
+		return disease;
 	}
 	
 	//Methods :	
@@ -127,6 +131,10 @@ public class SimulationPanel extends JPanel{
 	}
 	
 	public void updateValues() {
+		
+	}
+	
+	public void socialDistancing() {
 		
 	}
 	

@@ -114,6 +114,10 @@ public class OneGroupPanel extends SimulationPanel{
 		quarantineToGroup(quarantine, box);
 	}
 	
+	public void socialDistancing() {
+		box.setSocialDistancing();
+	}
+	
 	public void updateConfig() {
 		box.move();
 		box.infect();

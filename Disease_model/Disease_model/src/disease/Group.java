@@ -253,6 +253,17 @@ public class Group extends JPanel{
 			group.get(i).updatePosition();
 		}
 	}
+    
+    public void setSocialDistancing() {
+    	for(int i=0;i<group.size();i++){
+    		/*group.get(i).stopSocialDistancing();
+    		double test = Math.random();
+    		if(test<disease.getSocialDistanceProportion()) {
+    			group.get(i).startSocialDistancing();
+    		}*/
+    		group.get(i).setSocialDistanceCoeff(disease.getSocialDistanceProportion());
+    	}
+    }
 	
 	//Method performing the disease transmission step
 	public void infect(){

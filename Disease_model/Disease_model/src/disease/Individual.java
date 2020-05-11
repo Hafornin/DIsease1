@@ -83,6 +83,16 @@ public class Individual {
 	 */
 	private double socialDistanceCoeff;
 	
+	/**
+	 * value of socialDistanceCoeff when this individual applies social distancing
+	 */
+	private double SOCIAL_DISTANCE_COEFF = 10000000;
+	
+	/**
+	 * distance at which individuals repel each other when social distancing is active
+	 */
+	private int SOCIAL_DISTANCE_RADIUS = 50;
+	
 //=================== Attributes for implementing a central travel point ========================
 	
 	/**
@@ -127,7 +137,6 @@ public class Individual {
 		velocity = new Vector("polar", V_NORM,2*Math.PI*Math.random());
 		
 		//initializing the attributes used to implement social distancing
-		socialDistanceCoeff = 10000000;
 		socialDistanceCoeff = 0;
 		othersForce = new Vector();
 		
@@ -186,7 +195,8 @@ public class Individual {
 	 * @param sdc the coefficient of social distancing for this individual
 	 */
 	public void setSocialDistanceCoeff(double sdc){
-		socialDistanceCoeff = sdc;
+		socialDistanceCoeff = sdc*SOCIAL_DISTANCE_COEFF;
+		velocity.setNorm(V_NORM);
 	}	
 	
 	/**
@@ -324,6 +334,19 @@ public class Individual {
 
 //=================== Implementing social distancing ========================		
 	
+	/**
+	 * Method to make this individual avoid other individuals
+	 */
+	public void startSocialDistancing() {
+		socialDistanceCoeff = SOCIAL_DISTANCE_COEFF;
+	}
+	
+	/**
+	 * Method to make this individual ignore social distancing
+	 */
+	public void stopSocialDistancing() {
+		socialDistanceCoeff = 0;
+	}
 	
 	/**
 	 * Method telling wether an individual belongs or not to this individual's social distance radius
@@ -331,7 +354,7 @@ public class Individual {
 	 * @return TRUE if the individual i belongs to this individual's social distance radius, FALSE otherwise
 	 */
 	public boolean isCloseEnoughtoRepel(Individual i){
-		if(position.distance(i.getPosition()) <= disease.getSocialDistanceRadius()){
+		if(position.distance(i.getPosition()) <= SOCIAL_DISTANCE_RADIUS){
 			return true;
 		}else{
 			return false;

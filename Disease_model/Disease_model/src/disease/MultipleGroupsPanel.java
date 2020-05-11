@@ -1,8 +1,5 @@
 package disease;
-import java. awt.*;
 import java.util.LinkedList;
-import java.util.*;
-
 import org.jfree.data.category.DefaultCategoryDataset;
 
 public class MultipleGroupsPanel extends SimulationPanel{
@@ -114,7 +111,7 @@ public class MultipleGroupsPanel extends SimulationPanel{
 					int k = 0;
 					while(k<boxes[i].getGroup().size()) {
 						double test = Math.random();
-						if(test<boxes[i].getLeaveGroupProba()*boxes[a].getEnterGroupProba()) {
+						if(test<disease.getTravelBetweenGroups()) {
 							temporaryGroups[a].add(boxes[i].getGroup().get(k));
 							boxes[i].remove(k);	
 							k--;
@@ -183,6 +180,12 @@ public class MultipleGroupsPanel extends SimulationPanel{
 	public void outQuarantine() {
 		for(int i=0;i<boxes.length;i++){
 			quarantineToGroup(quarantine[i], boxes[i]);
+		}
+	}
+	
+	public void socialDistancing() {
+		for(int i=0;i<boxes.length;i++) {
+			boxes[i].setSocialDistancing();
 		}
 	}
 	
