@@ -51,7 +51,7 @@ public class Group extends JPanel{
 	private final int Y_LENGTH;
 	
 	
-//=================== Number of susceptible, infected, recovered and identified individuals in the group ========================
+//=================== Number of susceptible, infected, recovered, dead and identified individuals in the group ========================
 
 	/**
 	 * the number of susceptible persons in the the collection of individuals we run the simulation on
@@ -70,17 +70,10 @@ public class Group extends JPanel{
 	 */
 	private int numIdentified;
 	
-	
-//=================== Attributes used to implement travel between groups ========================
-
 	/**
-	 * the probability for an individual to leave this group
+	 * the number of dead people since the beginning of the simulation
 	 */
-	private double leaveGroupProba = 0.1;
-	/**
-	 * the probability for an individual to enter this group
-	 */
-	private double enterGroupProba = 0.1;
+	private int numDead;
 
 	
 //CONSTRUCTOR :
@@ -117,6 +110,7 @@ public class Group extends JPanel{
 		numInfected = 0;
 		numRecovered = 0;
 		numIdentified =0;
+		numDead = 0;
 		
 		setSize((int) (X_LENGTH+50),(int) (Y_LENGTH+50)); //setting the size of the JPanel
 		
@@ -127,7 +121,7 @@ public class Group extends JPanel{
 //GETTERS :
 	
 	/**
-	 * Gets the number of susceptible individuals in thsi group
+	 * Gets the number of susceptible individuals in this group
 	 * @return the number of susceptible individuals in this group
 	 */
 	public int getNumSusceptible(){
@@ -159,6 +153,14 @@ public class Group extends JPanel{
 	}
 	
 	/**
+	 * Gets the number of individuals of this group that have died since the start of the simulation
+	 * @return the number of individuals of this group that have died since the start of the simulation
+	 */
+	public int getNumDead() {
+		return numDead;
+	}
+	
+	/**
 	 * Gets the collection of individuals in this group
 	 * @return the collection of individuals in this group
 	 */
@@ -172,22 +174,6 @@ public class Group extends JPanel{
 	 */
 	public int getGroupSize() {
 		return SIZE;
-	}
-	
-	/**
-	 * Gets the probability for an individual to leave this group
-	 * @return the probability for an individual to leave this group
-	 */
-	public double getLeaveGroupProba() {
-		return leaveGroupProba;
-	}
-	
-	/**
-	 * Gets the probability for an individual to enter this group
-	 * @return the probability for an individual to enter this group
-	 */
-	public double getEnterGroupProba() {
-		return enterGroupProba;
 	}
 
 	
@@ -210,6 +196,9 @@ public class Group extends JPanel{
 	public void add(Individual i) {
 		group.add(i);
 	}
+	
+
+//=================== Updating the number of susceptible, infected, recovered, dead and identified individuals in the group ========================
 	
 	/**
 	 * Method updating the number of susceptible, infected and recovered individuals
@@ -238,10 +227,10 @@ public class Group extends JPanel{
 //=================== Moving the individuals ========================
     
     /**
-     * Method making the individuals move inside the group
+     * Method making the individuals move inside this group
      */
     public void move(){
-    	//making the individuals in the group repel each other when social distancing is on
+    	//making the individuals in this group repel each other when social distancing is on
 		for(int i=0;i<group.size();i++){
 			for(int j=0;j<group.size();j++){
 				if(i!=j && group.get(i).isCloseEnoughtoRepel(group.get(j))){
@@ -249,24 +238,20 @@ public class Group extends JPanel{
 				}
 			}			
 		}
+		//displacing the individuals
 		for(int i=0;i<group.size();i++){
 			group.get(i).updatePosition();
 		}
 	}
     
-    public void setSocialDistancing() {
-    	for(int i=0;i<group.size();i++){
-    		/*group.get(i).stopSocialDistancing();
-    		double test = Math.random();
-    		if(test<disease.getSocialDistanceProportion()) {
-    			group.get(i).startSocialDistancing();
-    		}*/
-    		group.get(i).setSocialDistanceCoeff(disease.getSocialDistanceProportion());
-    	}
-    }
+    
+//=================== Transmitting the disease ========================
 	
-	//Method performing the disease transmission step
+	/**
+	 * Method performing the disease transmission step
+	 */
 	public void infect(){
+		//infecting the individuals that are close to an infected person
 		for(int i=0;i<group.size();i++){
 			for(int j=0;j<group.size();j++){
 				if(group.get(i).isCloseEnoughtoInfect(group.get(j))){
@@ -275,24 +260,59 @@ public class Group extends JPanel{
 			}
 			
 		}
+		//updating the disease-related parameters of each individual
 		for(int i=0;i<group.size();i++){
 			group.get(i).updateTime();
 			group.get(i).updateState();
 		}
 	}
 	
+	/**
+	 * Method to identify some of the infected individuals in this group
+	 */
 	public void identify() {
 		for(int i=0;i<group.size();i++){
 			group.get(i).identify();
 		}
 	}
+	/**
+	 * Method to make some of the infected individuals in this group die
+	 */
+	public void grimReaper() {
+		int i=0;
+		while(i<group.size()){
+			if(group.get(i).die()) {
+				remove(i);
+				numDead++; //updating the number of dead individuals in this group 
+				i--;
+			}
+			i++;
+		}
+	}
 	
+	
+//=================== Social distancing ========================
+	
+	/**
+	 * Method setting the extent of social distancing for each individual in this group
+	 */
+	public void setSocialDistancing() {
+    	for(int i=0;i<group.size();i++){
+    		group.get(i).setSocialDistanceCoeff(disease.getSocialDistanceCoeff());
+    	}
+    }
+	
+	
+//=================== Social distancing ========================
 
-//Display :
-
+	/**
+	 * Method displaying the individuals in a square box
+	 */
 	public void paintComponent(Graphics g){
+		//drawing the box
 		g.setColor(Color.black);
 		g.drawRect(X-5,Y-5,X_LENGTH+10,Y_LENGTH+10);
+		//drawing the individuals as colored dots
 		for(int i=0;i<group.size();i++){
 			g.setColor(group.get(i).getColor());
 			g.fillOval((int)group.get(i).getPosition().getX()-5,(int)group.get(i).getPosition().getY()-5,10,10);
@@ -300,16 +320,4 @@ public class Group extends JPanel{
 	}
 		
 		
-}		
-		
-		
-		
-	
-	
-	
-	
-	
-
-
-
-
+}

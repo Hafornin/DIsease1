@@ -7,27 +7,26 @@ public class MultipleGroupsPanel extends SimulationPanel{
 	//Attributes :
 	private Group[] boxes;
 	private Group[] quarantine;
+	private Group[] centralPoint;
 	
 	
 	//Constructor :
 	public MultipleGroupsPanel(Disease d){
 		super(d);
 		boxes = new Group[8];
+		centralPoint = new Group[boxes.length];
 		for(int i=0;i<boxes.length;i++){
 			boxes[i] = new Group(disease.getGroupSize(), 10, 10, 200, 200, d);
+			centralPoint[i] = new Group(0, 10, 10, 10, 10, d);
+			add(boxes[i]);
+			add(centralPoint[i]);
 		}
 		
-		for(int i=0;i<boxes.length-7;i++){
-			for(int j=0;j<30;j++) {
-				boxes[i].getGroup().get(j).initialInfect();
-			}
+		for(int i=0;i<=boxes[0].getGroup().size()/10;i++) {
+			boxes[0].getGroup().get(i).initialInfect();
 		}
 		
 		setLayout(null);
-		
-		for(int i=0;i<boxes.length;i++){
-			add(boxes[i]);
-		}
 		
 		boxes[0].setLocation(20,60);
 		boxes[1].setLocation(260,60);
@@ -39,6 +38,17 @@ public class MultipleGroupsPanel extends SimulationPanel{
 		
 		boxes[6].setLocation(20,540);
 		boxes[7].setLocation(260,540);
+		
+		centralPoint[0].setLocation(115,155);
+		centralPoint[1].setLocation(355,155);
+		centralPoint[2].setLocation(595,155);
+		
+		centralPoint[3].setLocation(115,395);
+		centralPoint[4].setLocation(355,395);
+		centralPoint[5].setLocation(595,395);
+		
+		centralPoint[6].setLocation(115,635);
+		centralPoint[7].setLocation(355,635);
 	
 		
 		
@@ -112,6 +122,7 @@ public class MultipleGroupsPanel extends SimulationPanel{
 					while(k<boxes[i].getGroup().size()) {
 						double test = Math.random();
 						if(test<disease.getTravelBetweenGroups()) {
+							boxes[i].getGroup().get(k).takeToCenter();
 							temporaryGroups[a].add(boxes[i].getGroup().get(k));
 							boxes[i].remove(k);	
 							k--;
@@ -126,15 +137,30 @@ public class MultipleGroupsPanel extends SimulationPanel{
 		}		
 	}
 	
+	public void centralPoint() {
+		for(int i=0;i<boxes.length;i++) {
+			goToCentralPoint(boxes[i],centralPoint[i]);
+			leaveCentralPoint(boxes[i],centralPoint[i]);
+		}
+	}
+	
 	public void updateConfig() {
 		for(int i=0;i<boxes.length;i++){
 			boxes[i].move();
 			boxes[i].infect();
 			boxes[i].identify();
+			boxes[i].grimReaper();
 		}
 		for(int i=0;i<quarantine.length;i++){
 			quarantine[i].move();
 			quarantine[i].infect();
+			quarantine[i].grimReaper();
+		}
+		for(int i=0;i<centralPoint.length;i++){
+			centralPoint[i].move();
+			centralPoint[i].infect();
+			centralPoint[i].identify();
+			centralPoint[i].grimReaper();
 		}
 	}	
 	
@@ -143,16 +169,27 @@ public class MultipleGroupsPanel extends SimulationPanel{
 		numInfected = 0;
 		numRecovered = 0;
 		numIdentified = 0;
+		numDead = 0;
 		for(int i=0;i<boxes.length;i++){
 			boxes[i].updateValues();
 			numSusceptible += boxes[i].getNumSusceptible();
 			numInfected += boxes[i].getNumInfected();
 			numRecovered += boxes[i].getNumRecovered();
 			numIdentified += boxes[i].getNumIdentified();
+			numDead += boxes[i].getNumDead();
 		}
+		for(int i=0;i<centralPoint.length;i++){
+			centralPoint[i].updateValues();
+			numSusceptible += centralPoint[i].getNumSusceptible();
+			numInfected += centralPoint[i].getNumInfected();
+			numRecovered += centralPoint[i].getNumRecovered();
+			numIdentified += centralPoint[i].getNumIdentified();
+			numDead += centralPoint[i].getNumDead();
+		}		
 		for(int i=0;i<quarantine.length;i++){
 			quarantine[i].updateValues();
 			numInfected += quarantine[i].getNumInfected();
+			numDead += quarantine[i].getNumDead();
 		}
 	}
 	

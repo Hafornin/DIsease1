@@ -3,6 +3,7 @@
  */
 
 package disease;
+
 import java.awt.Color;
 
 public class Individual {
@@ -216,7 +217,7 @@ public class Individual {
 	 * Method updating the state and color of an individual from their infection time
 	 */
 	public void updateState(){
-		if(infectedTimeDays>disease.getInfectionTimeDays()){
+		if(infectedTimeDays>disease.getInfectionTime()){
 			state = "recovered";
 			color = Color.blue;
 		}else if(infectedTimeDays>0){
@@ -278,6 +279,19 @@ public class Individual {
 			identified = true;
 		}
 	}
+	/**
+	 * Method deciding wether this individual dies from the disease
+	 * @return TRUE if this individual dies from the disease, FALSE otherwise
+	 */
+	public boolean die() {
+		double test = Math.random();
+		if(state=="infected" && test<disease.getMortality()/disease.getInfectionTime()) {
+			return true;
+		}else {
+			return false;
+		}
+		
+	}
 	
 //=================== Moving this individual ========================	
 	
@@ -335,20 +349,6 @@ public class Individual {
 //=================== Implementing social distancing ========================		
 	
 	/**
-	 * Method to make this individual avoid other individuals
-	 */
-	public void startSocialDistancing() {
-		socialDistanceCoeff = SOCIAL_DISTANCE_COEFF;
-	}
-	
-	/**
-	 * Method to make this individual ignore social distancing
-	 */
-	public void stopSocialDistancing() {
-		socialDistanceCoeff = 0;
-	}
-	
-	/**
 	 * Method telling wether an individual belongs or not to this individual's social distance radius
 	 * @param i the individual for which we want to know wether it belongs or not to this individual's social distance radius
 	 * @return TRUE if the individual i belongs to this individual's social distance radius, FALSE otherwise
@@ -361,7 +361,7 @@ public class Individual {
 		}
 	}
 	
-	
+
 	/**
 	 * Method implementing repulsion between individuals for social distancing
 	 * @param i the individual that repels this individual

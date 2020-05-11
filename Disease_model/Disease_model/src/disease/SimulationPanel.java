@@ -4,17 +4,19 @@ import javax.swing.JPanel;
 
 import org.jfree.data.category.DefaultCategoryDataset;
 
-public abstract class SimulationPanel extends JPanel{
+public class SimulationPanel extends JPanel{
 	
 	//Attributes :
+	
 	protected DefaultCategoryDataset  dataset;	
 	protected int numSusceptible; //number of susceptible persons in the simulation
 	protected int numInfected; //number of infected persons in the simulation
 	protected int numRecovered; //number of recovered persons in the simulation
 	protected int numIdentified; //number of identified infected persons in the simulation
+	protected int numDead;
 	protected int iteration;
 	protected int day;
-	protected final int ITERATIONS_PER_DAY = 20;
+	protected final int ITERATIONS_PER_DAY = 50;
 	protected Disease disease;
 	
 	protected boolean quarantining;
@@ -24,7 +26,7 @@ public abstract class SimulationPanel extends JPanel{
 	//Constructor :
 	public SimulationPanel(Disease d){
 		disease = d;
-		
+		d.setInfectionTime((int) d.getInfectionTime()*ITERATIONS_PER_DAY);		
 		setSize(750,900);         
 		setVisible(true);
 		setBackground(Color.white);
@@ -33,6 +35,7 @@ public abstract class SimulationPanel extends JPanel{
 		numInfected = 0;
 		numRecovered = 0;
 		numIdentified =0;
+		numDead = 0;
 		
 		dataset = new DefaultCategoryDataset();
 		
@@ -60,6 +63,10 @@ public abstract class SimulationPanel extends JPanel{
 	
 	public Disease getDisease() {
 		return disease;
+	}
+	
+	public int getIterationsPerDay() {
+		return ITERATIONS_PER_DAY;
 	}
 	
 	//Methods :	
@@ -124,6 +131,7 @@ public abstract class SimulationPanel extends JPanel{
 		dataset.addValue(numRecovered, "Recovered", Integer.toString(day));
 		dataset.addValue(numSusceptible, "Susceptible", Integer.toString(day));
 		dataset.addValue(numIdentified, "Identified", Integer.toString(day));
+		dataset.addValue(numDead, "Dead", Integer.toString(day));
 	}
 	
 	public void updateConfig() {
@@ -138,6 +146,40 @@ public abstract class SimulationPanel extends JPanel{
 		
 	}
 	
+	public void goToCentralPoint(Group g, Group centralPoint) {
+		int i = 0;
+		while(i<g.getGroup().size()) {
+			double test = Math.random();
+			if(test<disease.getCentralPointTripProba()) {
+				g.getGroup().get(i).takeToCenter();
+				centralPoint.add(g.getGroup().get(i));
+				g.remove(i);
+				i--;
+			}
+			i++;
+		}
+	}
+	
+	public void leaveCentralPoint(Group g, Group centralPoint) {
+		int i = 0;
+		while(i<centralPoint.getGroup().size()) {
+			if(centralPoint.getGroup().get(i).getTimeInCentralPoint()>20) {
+				centralPoint.getGroup().get(i).setTimeInCentralPoint(0);
+				centralPoint.getGroup().get(i).setRandomVelocity();
+				g.add(centralPoint.getGroup().get(i));
+				centralPoint.remove(i);
+				i--;
+			} else {
+				centralPoint.getGroup().get(i).setTimeInCentralPoint(centralPoint.getGroup().get(i).getTimeInCentralPoint()+1);
+			}
+			i++;
+		}
+	}
+	
+	public void centralPoint() {
+		
+	}
+	
 	public void iterate(){
 		updateConfig();
 		outQuarantine();
@@ -147,6 +189,7 @@ public abstract class SimulationPanel extends JPanel{
 		if(travel) {
 			travel();
 		}
+		centralPoint();
 		updateValues();
 		iteration ++;
 		int thisDay = iteration/ITERATIONS_PER_DAY;
@@ -154,6 +197,7 @@ public abstract class SimulationPanel extends JPanel{
 			day = thisDay;
 			fillDataset();
 		}
+		
 		repaint();
 	}
 	
